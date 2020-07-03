@@ -23,7 +23,7 @@ import {
 } from "@angular/core";
 import { MouseCursorStyle } from "@amcharts/amcharts4/core";
 import { FormBuilder, FormGroup, FormArray, FormControl } from "@angular/forms";
-import { startOfDay, endOfDay } from "date-fns";
+import { startOfDay, endOfDay, addHours } from "date-fns";
 useTheme(am4themes_animated);
 @Component({
   selector: "my-app",
@@ -224,7 +224,8 @@ this.chart.events.on("datavalidated", (ev) => {
       // and then set format of your dates using chart.dataDateFormat property,
       // however when possible, use date objects, as this will speed up chart rendering.
       var newDate = new Date(firstDate);
-      newDate.setMinutes(newDate.getMinutes() + i);
+      addHours(newDate,1);
+      // newDate.setMinutes(newDate.getMinutes() + i);
 
       if (step >= 60) {
         step = 0;
