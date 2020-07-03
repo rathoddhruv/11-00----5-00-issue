@@ -177,29 +177,29 @@ chart.dateFormatter.dateFormat = {
 
             });
 
-        chart.events.on("ready", () => {
-           (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
-        startOfDay(new Date()) ,
-        endOfDay(new Date()),
-        true,
-        true
-        );
-        })
-this.chart.events.on("datavalidated", (ev) => {
-      // Create a range
-      console.log('datavalidated () => zoomToDates selected');
-      setTimeout(() => {
-        (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
-        startOfDay(new Date()) ,
-        endOfDay(new Date()),
-        true,
-        true
-        );
+        // chart.events.on("ready", () => {
+        //    (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
+        // startOfDay(new Date()) ,
+        // endOfDay(new Date()),
+        // true,
+        // true
+        // );
+        // })
+// this.chart.events.on("datavalidated", (ev) => {
+//       // Create a range
+//       console.log('datavalidated () => zoomToDates selected');
+//       setTimeout(() => {
+//         (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
+//         startOfDay(new Date()) ,
+//         endOfDay(new Date()),
+//         true,
+//         true
+//         );
 
-      }, 50);
+//       }, 50);
 
 
-    });
+//     });
 
 
 
@@ -213,7 +213,7 @@ this.chart.events.on("datavalidated", (ev) => {
     var firstDate = new Date();
     firstDate.setDate(firstDate.getDate() - 100);
     firstDate.setHours(0, 0, 0, 0);
-
+var newDate = new Date(firstDate);
     var consumption = 1600;
     var demand = 1600;
     var temperature = 1600;
@@ -223,8 +223,8 @@ this.chart.events.on("datavalidated", (ev) => {
       // we create date objects here. In your data, you can have date strings
       // and then set format of your dates using chart.dataDateFormat property,
       // however when possible, use date objects, as this will speed up chart rendering.
-      var newDate = new Date(firstDate);
-      addHours(newDate,1);
+      
+      newDate = addHours(newDate,1);
       // newDate.setMinutes(newDate.getMinutes() + i);
 
       if (step >= 60) {
