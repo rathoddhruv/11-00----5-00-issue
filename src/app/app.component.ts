@@ -23,7 +23,15 @@ import {
 } from "@angular/core";
 import { MouseCursorStyle } from "@amcharts/amcharts4/core";
 import { FormBuilder, FormGroup, FormArray, FormControl } from "@angular/forms";
-import { startOfDay, endOfDay, addHours, addDays, addYears, startOfYear, endOfYear } from "date-fns";
+import {
+  startOfDay,
+  endOfDay,
+  addHours,
+  addDays,
+  addYears,
+  startOfYear,
+  endOfYear
+} from "date-fns";
 useTheme(am4themes_animated);
 @Component({
   selector: "my-app",
@@ -63,17 +71,20 @@ export class AppComponent implements OnInit {
     weatherSeries.zIndex = 20;
     weatherSeries2.zIndex = 20;
 
+    
+
     this.zone.runOutsideAngular(() => {
       // Add legend
-            chart.legend = new am4charts.Legend();
-            chart.legend.position = "absolute";
-            chart.legend.parent = chart.bottomAxesContainer;
-            chart.scrollbarX = new am4charts.XYChartScrollbar();
-            chart.scrollbarX.parent = chart.bottomAxesContainer;
+      chart.legend = new am4charts.Legend();
+      chart.legend.position = "absolute";
+      chart.legend.parent = chart.bottomAxesContainer;
+      chart.scrollbarX = new am4charts.XYChartScrollbar();
+      chart.scrollbarX.parent = chart.bottomAxesContainer;
 
       chart.dateFormatter.utc = true;
       chart.dateFormatter.inputDateFormat = "i";
       chart.cursor = new XYCursor();
+      chart.cursor.xAxis = dateAxis;
       chart.cursor.behavior = "panX";
 
       chart.cursor.behavior = "selectXY";
@@ -95,9 +106,9 @@ export class AppComponent implements OnInit {
       dateAxis.tooltipText = "{HH:mm:ss}";
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
-       dateAxis.baseInterval = { timeUnit: 'hour', count: 1 };
+      dateAxis.baseInterval = { timeUnit: "hour", count: 1 };
 
-      consumptionAxis.title.text = "demand";
+      consumptionAxis.title.text = "consumption";
       consumptionAxis.title.fill = am4core.color("#0A7696");
       consumptionAxis.renderer.labels.template.fill = am4core.color("#0A7696");
       consumptionAxis.strictMinMax = false;
@@ -106,7 +117,7 @@ export class AppComponent implements OnInit {
       consumptionAxis.renderer.opposite = false;
       consumptionAxis.renderer.labels.template.fontWeight = "bold";
 
-      demandAxis.title.text = "consumption";
+      demandAxis.title.text = "demand";
       demandAxis.title.fill = am4core.color("#E14555");
       demandAxis.renderer.labels.template.fill = am4core.color("#E14555");
       demandAxis.renderer.grid.template.disabled = true;
@@ -142,10 +153,6 @@ export class AppComponent implements OnInit {
         new am4charts.CircleBullet()
       );
 
-      
-  
-      
-
       // Create series
       consumptionSeries.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
@@ -174,7 +181,7 @@ export class AppComponent implements OnInit {
       consumptionSeries2.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
       consumptionSeries2.sequencedInterpolation = false;
-      consumptionSeries2.dataFields.valueY = "value";
+      consumptionSeries2.dataFields.valueY = "consumption2";
       consumptionSeries2.dataFields.dateX = "time";
       consumptionSeries2.yAxis = consumptionAxis;
       consumptionSeries2.columns.template.propertyFields.strokeDasharray =
@@ -195,7 +202,6 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')} " + +"";
       consumptionSeries2.columns.template.width = am4core.percent(100);
       consumptionState.properties.fillOpacity = 0.9;
-     
 
       demandSeries.sequencedInterpolation = true;
       demandSeries.dataFields.valueY = "demand";
@@ -240,13 +246,11 @@ export class AppComponent implements OnInit {
       demandSeries2.tensionX = 0.77;
       demandSeries2.strokeDasharray = "8,4";
       // demandSeries2.hiddenInLegend = true;
-  
+
       //////////////////////////////////////////////
       demandBullet2.fill = am4core.color("red");
 
-
-
-// let weatherBullet: am4charts.CircleBullet;
+      // let weatherBullet: am4charts.CircleBullet;
       // weatherSeries = chart.series.values[2] as am4charts.LineSeries;
       weatherBullet = weatherSeries.bullets.values[0] as am4charts.CircleBullet;
       weatherBullet.fill = am4core.color("#FFB822");
@@ -293,7 +297,6 @@ export class AppComponent implements OnInit {
       weatherSeries2.tooltipText =
         "{valueY.formatNumber('#,###.')}" + "° F" + "";
       weatherSeries2.groupFields.valueY = "average";
-
 
       chart.dateFormatter.dateFormat = {
         year: "numeric",
@@ -384,21 +387,20 @@ export class AppComponent implements OnInit {
 
       this.chart = chart;
       let data = this.generateChartData(0);
-      debugger
-      this.chart.map.getKey('demand1').data = data[0];
-      this.chart.map.getKey('consumption1').data = data[0];
-      this.chart.map.getKey('demand2').data = data[1];
-      this.chart.map.getKey('consumption2').data = data[1];
-      this.chart.map.getKey('weather1').data = data[0];
-      this.chart.map.getKey('weather2').data = data[1];
+      debugger;
+      this.chart.map.getKey("demand1").data = data[0];
+      this.chart.map.getKey("consumption1").data = data[0];
+      this.chart.map.getKey("weather1").data = data[0];
+
       // this.chart.data = this.generateChartData(0);
-      // setTimeout(() => {
-      //   (this.chart.series
-      //     .values[2] as am4charts.LineSeries).data = this.generateChartData(1);
-      // }, 200);
+      setTimeout(() => {
+        this.chart.map.getKey("consumption2").data = data[1];
+        this.chart.map.getKey("demand2").data = data[1];
+        this.chart.map.getKey("weather2").data = data[1];
+      }, 2000);
       (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
         startOfDay(new Date()),
-        endOfDay(addDays(new Date(), 12) ),
+        endOfDay(addDays(new Date(), 12)),
         true,
         true
       );
@@ -441,7 +443,7 @@ export class AppComponent implements OnInit {
   }
 
   generateChartData(isWeather) {
-    var chartData = [[],[]];
+    var chartData = [[], []];
     var firstDate = new Date();
     firstDate.setDate(firstDate.getDate());
     firstDate.setHours(0, 0, 0, 0);
@@ -468,25 +470,25 @@ export class AppComponent implements OnInit {
       consumption += Math.round(
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
-      demand += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      demand += Math.round(
+        (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
+      );
       temperature += Math.round(
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
 
-      chartData[0].push(
-        {
-          time: newDate.toUTCString(),
-          consumption: consumption,
-          demand: demand,
-          temperature: temperature
-        });
-        chartData[1].push({
-          time: newDate.toUTCString(),
-          consumption2: consumption - Math.round( Math.random() * 500 ),
-          demand2: demand - Math.round( Math.random() * 500 ),
-          temperature2: temperature + Math.round( (Math.random()-0.5) * 500 )
-        }
-      );
+      chartData[0].push({
+        time: newDate.toUTCString(),
+        consumption: consumption,
+        demand: demand,
+        temperature: temperature
+      });
+      chartData[1].push({
+        time: newDate.toUTCString(),
+        consumption2: consumption - Math.round(Math.random() * 500),
+        demand2: demand - Math.round(Math.random() * 500),
+        temperature2: temperature + Math.round((Math.random() - 0.5) * 500)
+      });
     }
     return chartData;
   }
