@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
 
-      consumptionAxis.title.text = "[bold]" + +" (" + +")";
+      consumptionAxis.title.text = "a";
       consumptionAxis.title.fill = am4core.color("#0A7696");
       consumptionAxis.renderer.labels.template.fill = am4core.color("#0A7696");
       consumptionAxis.strictMinMax = false;
@@ -97,17 +97,13 @@ export class AppComponent implements OnInit {
       consumptionAxis.renderer.opposite = false;
       consumptionAxis.renderer.labels.template.fontWeight = "bold";
 
-      demandAxis.title.text = "[bold]" + +" (" + +")";
+      demandAxis.title.text = "b";
       demandAxis.title.fill = am4core.color("#E14555");
       demandAxis.renderer.labels.template.fill = am4core.color("#E14555");
       demandAxis.renderer.grid.template.disabled = true;
       demandAxis.renderer.opposite = true;
       demandAxis.background.fill = am4core.color("#fff");
       demandAxis.renderer.labels.template.fontWeight = "bold";
-
-      demandAxis.strictMinMax = false;
-      // demandAxis.min = response.intervalData[0].baseDemandAxisValue;
-      demandAxis.title.rotation = 270;
 
       weatherAxis.title.text = "[bold]Temperature (F)";
       weatherAxis.title.fill = am4core.color("#70728A");
@@ -119,18 +115,78 @@ export class AppComponent implements OnInit {
       // weatherAxis.min = response.intervalData[0].baseDemandAxisValue;
       weatherAxis.title.rotation = 270;
       weatherAxis.renderer.labels.template.fontWeight = "bold";
-      weatherAxis.hide();
 
+      demandAxis.strictMinMax = false;
+      // demandAxis.min = response.intervalData[0].baseDemandAxisValue;
+      demandAxis.title.rotation = 270;
       let consumptionState = consumptionSeries.columns.template.states.create(
         "hover"
       );
-        demandSeries.bullets.push(new am4charts.CircleBullet());
-            let demandBullet2 = demandSeries2.bullets.push(new am4charts.CircleBullet());
-            let weatherBullet = weatherSeries.bullets.push(new am4charts.CircleBullet());
-            let weatherBullet2 = weatherSeries2.bullets.push(new am4charts.CircleBullet());
-            
+      demandSeries.bullets.push(new am4charts.CircleBullet());
+      let demandBullet2 = demandSeries2.bullets.push(
+        new am4charts.CircleBullet()
+      );
+      let weatherBullet = weatherSeries.bullets.push(
+        new am4charts.CircleBullet()
+      );
+      let weatherBullet2 = weatherSeries2.bullets.push(
+        new am4charts.CircleBullet()
+      );
+
+      // let weatherBullet: am4charts.CircleBullet;
+      // weatherSeries = chart.series.values[2] as am4charts.LineSeries;
+      weatherBullet = weatherSeries.bullets.values[0] as am4charts.CircleBullet;
+      weatherBullet.fill = am4core.color("#FFB822");
+      //////////////////////////////////////////////
+      weatherSeries.sequencedInterpolation = true;
+      weatherSeries.dataFields.valueY = "temperature";
+      weatherSeries.dataFields.dateX = "time";
+      weatherSeries.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
+      weatherSeries.name = "Avg Temp";
+      weatherSeries.strokeWidth = 2;
+      weatherSeries.id = "weather1";
+      weatherSeries.tooltip.label.fontWeight = "bold";
+      weatherSeries.stroke = am4core.color("#ffbb28");
+      weatherSeries.propertyFields.strokeDasharray = "dashLength";
+      weatherSeries.tooltip.background.stroke = am4core.color("#ffbb28");
+      weatherSeries.tooltip.background.fill = am4core.color("#ffffff");
+      weatherSeries.tooltip.label.fill = am4core.color("#000000");
+      weatherSeries.tooltip.background.strokeWidth = 2;
+      weatherSeries.tooltip.getFillFromObject = false;
+      weatherSeries.tooltipText =
+        "{valueY.formatNumber('#,###.')}" + "° F" + "";
+      weatherSeries.groupFields.valueY = "average";
+
+      // weatherSeries2 = chart.series.values[2] as am4charts.LineSeries;
+      weatherBullet2 = weatherSeries2.bullets
+        .values[0] as am4charts.CircleBullet;
+      weatherBullet2.fill = am4core.color("#FFB822");
+      //////////////////////////////////////////////
+      weatherSeries2.sequencedInterpolation = true;
+      weatherSeries2.dataFields.valueY = "temperature2";
+      weatherSeries2.dataFields.dateX = "time";
+      weatherSeries2.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
+      weatherSeries2.name = "Avg Temp";
+      weatherSeries2.strokeWidth = 2;
+      weatherSeries2.id = "weather2";
+      weatherSeries2.tooltip.label.fontWeight = "bold";
+      weatherSeries2.stroke = am4core.color("#ffbb28");
+      weatherSeries2.propertyFields.strokeDasharray = "dashLength";
+      weatherSeries2.tooltip.background.stroke = am4core.color("#ffbb28");
+      weatherSeries2.tooltip.background.fill = am4core.color("#ffffff");
+      weatherSeries2.tooltip.label.fill = am4core.color("#000000");
+      weatherSeries2.tooltip.background.strokeWidth = 2;
+      weatherSeries2.tooltip.getFillFromObject = false;
+      weatherSeries2.tooltipText =
+        "{valueY.formatNumber('#,###.')}" + "° F" + "";
+      weatherSeries2.groupFields.valueY = "average";
+      weatherSeries2.hiddenInLegend = true;
+      weatherSeries2.hide();
+      weatherSeries2.hiddenState;
+
       // Create series
-      consumptionSeries.columns.template.cursorOverStyle = MouseCursorStyle.pointer;
+      consumptionSeries.columns.template.cursorOverStyle =
+        MouseCursorStyle.pointer;
       consumptionSeries.sequencedInterpolation = false;
       consumptionSeries.dataFields.valueY = "consumption";
       consumptionSeries.dataFields.dateX = "time";
@@ -179,56 +235,53 @@ export class AppComponent implements OnInit {
       // consumptionState.properties.fillOpacity = 0.9;
       consumptionSeries2.hiddenInLegend = true;
 
+      demandSeries.sequencedInterpolation = true;
+      demandSeries.dataFields.valueY = "demand";
+      demandSeries.dataFields.dateX = "time";
+      demandSeries.yAxis = demandAxis;
+      demandSeries.name = "Demand";
+      demandSeries.stroke = am4core.color("red");
+      demandSeries.propertyFields.strokeDasharray = "dashLength";
+      demandSeries.strokeWidth = 2;
+      demandSeries.stroke = am4core.color("#E03445");
 
- demandSeries.defaultState.transitionDuration = this.cart.graphAnimationSpeed;
-            demandSeries.hiddenState.transitionDuration = this.cart.graphAnimationSpeed;
-            demandSeries.sequencedInterpolation = true;
-            demandSeries.dataFields.valueY = "demand";
-            demandSeries.dataFields.dateX = "time"
-            demandSeries.yAxis = demandAxis;
-            demandSeries.name = "Demand";
-            demandSeries.stroke = am4core.color("red");
-            demandSeries.propertyFields.strokeDasharray = "dashLength";
-            demandSeries.strokeWidth = 2;
-            demandSeries.stroke = am4core.color("#E03445");
+      demandSeries.tooltip.background.stroke = am4core.color("#E03445");
+      demandSeries.tooltip.label.fontWeight = "bold";
+      demandSeries.connect = false;
+      demandSeries.tooltip.background.fill = am4core.color("#ffffff");
+      demandSeries.tooltip.label.fill = am4core.color("#000000");
+      demandSeries.id = "demand1";
+      demandSeries.tooltip.background.strokeWidth = 2;
+      demandSeries.tooltip.getFillFromObject = false;
+      demandSeries.tooltipText = "{valueY.formatNumber('#,###.')} " + +"";
+      demandSeries.groupFields.valueY = "high";
+      demandSeries.tensionX = 0.77;
 
-            demandSeries.tooltip.background.stroke = am4core.color("#E03445");
-            demandSeries.tooltip.label.fontWeight = 'bold';
-            demandSeries.connect = false;
-            demandSeries.tooltip.background.fill = am4core.color("#ffffff");
-            demandSeries.tooltip.label.fill = am4core.color("#000000");
-            demandSeries.id = 'demand1';
-            demandSeries.tooltip.background.strokeWidth = 2;
-            demandSeries.tooltip.getFillFromObject = false;
-            demandSeries.tooltipText = "{valueY.formatNumber('#,###.')} " +  + '';
-            demandSeries.groupFields.valueY = "high";
-            demandSeries.tensionX = 0.77;
-
-            demandSeries2.sequencedInterpolation = true;
-            demandSeries2.dataFields.valueY = "demand";
-            demandSeries2.dataFields.dateX = "time"
-            demandSeries2.yAxis = demandAxis;
-            demandSeries2.name = "Demand2";
-            demandSeries2.stroke = am4core.color("red");
-            demandSeries2.propertyFields.strokeDasharray = "dashLength";
-            demandSeries2.strokeWidth = 2;
-            demandSeries2.stroke = am4core.color("#D90368");
-            demandSeries2.tooltip.background.stroke = am4core.color("#D90368");
-            demandSeries2.tooltip.label.fontWeight = 'bold';
-            demandSeries2.connect = false;
-            demandSeries2.tooltip.background.fill = am4core.color("#ffffff");
-            demandSeries2.tooltip.label.fill = am4core.color("#000000");
-            demandSeries2.id = 'demand2';
-            demandSeries2.tooltip.background.strokeWidth = 2;
-            demandSeries2.tooltip.getFillFromObject = false;
-            demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " +  + '';
-            demandSeries2.tensionX = 0.77;
-            demandSeries2.strokeDasharray = '8,4';
-            demandSeries2.hiddenInLegend = true;
-            demandSeries2.hide();
-            demandSeries2.hiddenState;
-            //////////////////////////////////////////////
-            demandBullet2.fill = am4core.color("red");
+      demandSeries2.sequencedInterpolation = true;
+      demandSeries2.dataFields.valueY = "demand2";
+      demandSeries2.dataFields.dateX = "time";
+      demandSeries2.yAxis = demandAxis;
+      demandSeries2.name = "Demand2";
+      demandSeries2.stroke = am4core.color("red");
+      demandSeries2.propertyFields.strokeDasharray = "dashLength";
+      demandSeries2.strokeWidth = 2;
+      demandSeries2.stroke = am4core.color("#D90368");
+      demandSeries2.tooltip.background.stroke = am4core.color("#D90368");
+      demandSeries2.tooltip.label.fontWeight = "bold";
+      demandSeries2.connect = false;
+      demandSeries2.tooltip.background.fill = am4core.color("#ffffff");
+      demandSeries2.tooltip.label.fill = am4core.color("#000000");
+      demandSeries2.id = "demand2";
+      demandSeries2.tooltip.background.strokeWidth = 2;
+      demandSeries2.tooltip.getFillFromObject = false;
+      demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " + +"";
+      demandSeries2.tensionX = 0.77;
+      demandSeries2.strokeDasharray = "8,4";
+      demandSeries2.hiddenInLegend = true;
+      demandSeries2.hide();
+      demandSeries2.hiddenState;
+      //////////////////////////////////////////////
+      demandBullet2.fill = am4core.color("red");
 
       chart.dateFormatter.dateFormat = {
         year: "numeric",
@@ -318,9 +371,12 @@ export class AppComponent implements OnInit {
       });
 
       this.chart = chart;
-      this.chart.data = this.generateChartData(0);
-      weatherSeries.dataFields.valueY = "demand";
-      weatherSeries.dataFields.dateX = "time";
+      
+      this.chart.map.getKey('demand1').data = this.generateChartData(0)[0];
+      this.chart.map.getKey('consumption1').data = this.generateChartData(0)[0];
+      this.chart.map.getKey('demand2').data = this.generateChartData(0)[1];
+      this.chart.map.getKey('consumption2').data = this.generateChartData(0)[1];
+      // this.chart.data = this.generateChartData(0);
       setTimeout(() => {
         (this.chart.series
           .values[2] as am4charts.LineSeries).data = this.generateChartData(1);
