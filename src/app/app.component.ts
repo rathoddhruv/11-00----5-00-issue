@@ -87,6 +87,7 @@ export class AppComponent implements OnInit {
       dateAxis.tooltipText = "{HH:mm:ss}";
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
+       dateAxis.baseInterval = { timeUnit: 'hour', count: 1 };
 
       consumptionAxis.title.text = "a";
       consumptionAxis.title.fill = am4core.color("#0A7696");
@@ -436,7 +437,7 @@ export class AppComponent implements OnInit {
     var temperature = 1600;
 
     let step = 0;
-    for (var i = 0; i < 40; i++) {
+    for (var i = 0; i < 400; i++) {
       // we create date objects here. In your data, you can have date strings
       // and then set format of your dates using chart.dataDateFormat property,
       // however when possible, use date objects, as this will speed up chart rendering.
