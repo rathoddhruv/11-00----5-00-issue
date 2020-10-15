@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     let demandAxis = chart.yAxes.push(new am4charts.ValueAxis());
     demandAxis.renderer.opposite = true;
     let weatherAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    
+
     let consumptionSeries = chart.series.push(new am4charts.ColumnSeries());
     let demandSeries = chart.series.push(new am4charts.LineSeries());
     let weatherSeries = chart.series.push(new am4charts.LineSeries());
@@ -101,7 +101,7 @@ export class AppComponent implements OnInit {
       consumptionAxis.title.fill = am4core.color("#0A7696");
       consumptionAxis.renderer.labels.template.fill = am4core.color("#0A7696");
       consumptionAxis.strictMinMax = false;
-      // consumptionAxis.min = response.intervalData[0].baseConsumtionAxisValue;
+      // consumptionAxis.min = 0;
       consumptionAxis.renderer.grid.template.disabled = true;
       consumptionAxis.renderer.opposite = false;
       consumptionAxis.renderer.labels.template.fontWeight = "bold";
@@ -121,12 +121,12 @@ export class AppComponent implements OnInit {
       weatherAxis.renderer.grid.template.disabled = true;
       weatherAxis.renderer.opposite = true;
       weatherAxis.strictMinMax = false;
-      // weatherAxis.min = response.intervalData[0].baseDemandAxisValue;
+      weatherAxis.min = 0;
       weatherAxis.title.rotation = 270;
       weatherAxis.renderer.labels.template.fontWeight = "bold";
 
       demandAxis.strictMinMax = false;
-      // demandAxis.min = response.intervalData[0].baseDemandAxisValue;
+      demandAxis.min = 0;
       demandAxis.title.rotation = 270;
       let consumptionState = consumptionSeries.columns.template.states.create(
         "hover"
@@ -142,53 +142,7 @@ export class AppComponent implements OnInit {
         new am4charts.CircleBullet()
       );
 
-      // let weatherBullet: am4charts.CircleBullet;
-      // weatherSeries = chart.series.values[2] as am4charts.LineSeries;
-      weatherBullet = weatherSeries.bullets.values[0] as am4charts.CircleBullet;
-      weatherBullet.fill = am4core.color("#FFB822");
-      //////////////////////////////////////////////
-      weatherSeries.sequencedInterpolation = true;
-      weatherSeries.dataFields.valueY = "temperature";
-      weatherSeries.dataFields.dateX = "time";
-      weatherSeries.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
-      weatherSeries.name = "Avg Temp";
-      weatherSeries.strokeWidth = 2;
-      weatherSeries.id = "weather1";
-      weatherSeries.tooltip.label.fontWeight = "bold";
-      weatherSeries.stroke = am4core.color("#ffbb28");
-      weatherSeries.propertyFields.strokeDasharray = "dashLength";
-      weatherSeries.tooltip.background.stroke = am4core.color("#ffbb28");
-      weatherSeries.tooltip.background.fill = am4core.color("#ffffff");
-      weatherSeries.tooltip.label.fill = am4core.color("#000000");
-      weatherSeries.tooltip.background.strokeWidth = 2;
-      weatherSeries.tooltip.getFillFromObject = false;
-      weatherSeries.tooltipText =
-        "{valueY.formatNumber('#,###.')}" + "° F" + "";
-      weatherSeries.groupFields.valueY = "average";
-
-      // weatherSeries2 = chart.series.values[2] as am4charts.LineSeries;
-      weatherBullet2 = weatherSeries2.bullets
-        .values[0] as am4charts.CircleBullet;
-      weatherBullet2.fill = am4core.color("#FFB822");
-      //////////////////////////////////////////////
-      weatherSeries2.sequencedInterpolation = true;
-      weatherSeries2.dataFields.valueY = "temperature2";
-      weatherSeries2.dataFields.dateX = "time";
-      weatherSeries2.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
-      weatherSeries2.name = "Avg Temp";
-      weatherSeries2.strokeWidth = 2;
-      weatherSeries2.id = "weather2";
-      weatherSeries2.tooltip.label.fontWeight = "bold";
-      weatherSeries2.stroke = am4core.color("#ffbb28");
-      weatherSeries2.propertyFields.strokeDasharray = "dashLength";
-      weatherSeries2.tooltip.background.stroke = am4core.color("#ffbb28");
-      weatherSeries2.tooltip.background.fill = am4core.color("#ffffff");
-      weatherSeries2.tooltip.label.fill = am4core.color("#000000");
-      weatherSeries2.tooltip.background.strokeWidth = 2;
-      weatherSeries2.tooltip.getFillFromObject = false;
-      weatherSeries2.tooltipText =
-        "{valueY.formatNumber('#,###.')}" + "° F" + "";
-      weatherSeries2.groupFields.valueY = "average";
+      
   
       
 
@@ -240,7 +194,7 @@ export class AppComponent implements OnInit {
       consumptionSeries2.columns.template.tooltipText =
         "{valueY.formatNumber('#,###.')} " + +"";
       consumptionSeries2.columns.template.width = am4core.percent(100);
-      // consumptionState.properties.fillOpacity = 0.9;
+      consumptionState.properties.fillOpacity = 0.9;
      
 
       demandSeries.sequencedInterpolation = true;
@@ -285,10 +239,61 @@ export class AppComponent implements OnInit {
       demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " + +"";
       demandSeries2.tensionX = 0.77;
       demandSeries2.strokeDasharray = "8,4";
-      demandSeries2.hiddenInLegend = true;
+      // demandSeries2.hiddenInLegend = true;
   
       //////////////////////////////////////////////
       demandBullet2.fill = am4core.color("red");
+
+
+
+// let weatherBullet: am4charts.CircleBullet;
+      // weatherSeries = chart.series.values[2] as am4charts.LineSeries;
+      weatherBullet = weatherSeries.bullets.values[0] as am4charts.CircleBullet;
+      weatherBullet.fill = am4core.color("#FFB822");
+      //////////////////////////////////////////////
+      weatherSeries.sequencedInterpolation = true;
+      weatherSeries.dataFields.valueY = "temperature";
+      weatherSeries.dataFields.dateX = "time";
+      weatherSeries.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
+      weatherSeries.name = "Avg Temp";
+      weatherSeries.strokeWidth = 2;
+      weatherSeries.id = "weather1";
+      weatherSeries.tooltip.label.fontWeight = "bold";
+      weatherSeries.stroke = am4core.color("#ffbb28");
+      weatherSeries.propertyFields.strokeDasharray = "dashLength";
+      weatherSeries.tooltip.background.stroke = am4core.color("#ffbb28");
+      weatherSeries.tooltip.background.fill = am4core.color("#ffffff");
+      weatherSeries.tooltip.label.fill = am4core.color("#000000");
+      weatherSeries.tooltip.background.strokeWidth = 2;
+      weatherSeries.tooltip.getFillFromObject = false;
+      weatherSeries.tooltipText =
+        "{valueY.formatNumber('#,###.')}" + "° F" + "";
+      weatherSeries.groupFields.valueY = "average";
+
+      // weatherSeries2 = chart.series.values[2] as am4charts.LineSeries;
+      weatherBullet2 = weatherSeries2.bullets
+        .values[0] as am4charts.CircleBullet;
+      weatherBullet2.fill = am4core.color("#FFB822");
+      //////////////////////////////////////////////
+      weatherSeries2.sequencedInterpolation = true;
+      weatherSeries2.dataFields.valueY = "temperature2";
+      weatherSeries2.dataFields.dateX = "time";
+      weatherSeries2.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
+      weatherSeries2.name = "Avg Temp2";
+      weatherSeries2.strokeWidth = 2;
+      weatherSeries2.id = "weather2";
+      weatherSeries2.tooltip.label.fontWeight = "bold";
+      weatherSeries2.stroke = am4core.color("#ffbb28");
+      weatherSeries2.propertyFields.strokeDasharray = "dashLength";
+      weatherSeries2.tooltip.background.stroke = am4core.color("#ffbb28");
+      weatherSeries2.tooltip.background.fill = am4core.color("#ffffff");
+      weatherSeries2.tooltip.label.fill = am4core.color("#000000");
+      weatherSeries2.tooltip.background.strokeWidth = 2;
+      weatherSeries2.tooltip.getFillFromObject = false;
+      weatherSeries2.tooltipText =
+        "{valueY.formatNumber('#,###.')}" + "° F" + "";
+      weatherSeries2.groupFields.valueY = "average";
+
 
       chart.dateFormatter.dateFormat = {
         year: "numeric",
@@ -380,10 +385,12 @@ export class AppComponent implements OnInit {
       this.chart = chart;
       let data = this.generateChartData(0);
       debugger
-      this.chart.map.getKey('demand1').data = this.generateChartData(0)[0];
-      this.chart.map.getKey('consumption1').data = this.generateChartData(0)[0];
-      this.chart.map.getKey('demand2').data = this.generateChartData(0)[1];
-      this.chart.map.getKey('consumption2').data = this.generateChartData(0)[1];
+      this.chart.map.getKey('demand1').data = data[0];
+      this.chart.map.getKey('consumption1').data = data[0];
+      this.chart.map.getKey('demand2').data = data[1];
+      this.chart.map.getKey('consumption2').data = data[1];
+      this.chart.map.getKey('weather1').data = data[0];
+      this.chart.map.getKey('weather2').data = data[1];
       // this.chart.data = this.generateChartData(0);
       // setTimeout(() => {
       //   (this.chart.series
@@ -459,11 +466,11 @@ export class AppComponent implements OnInit {
       }
 
       consumption += Math.round(
-        (Math.random() < 0.5 ? 1 : -1) * Math.random() * 10
+        (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
-      demand += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+      demand += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       temperature += Math.round(
-        (Math.random() < 0.5 ? 1 : -1) * Math.random() * 10
+        (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
 
       chartData[0].push(
@@ -475,9 +482,9 @@ export class AppComponent implements OnInit {
         });
         chartData[1].push({
           time: newDate.toUTCString(),
-          consumption2: consumption - Math.round( Math.random() * 100 ),
-          demandSeries2: demand - Math.round( Math.random() * 100 ),
-          temperature2: temperature + Math.round( Math.random() * 100 )
+          consumption2: consumption - Math.round( Math.random() * 500 ),
+          demandSeries2: demand - Math.round( Math.random() * 500 ),
+          temperature2: temperature + Math.round( (Math.random()-0.5) * 500 )
         }
       );
     }
