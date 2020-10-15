@@ -483,7 +483,7 @@ export class AppComponent implements OnInit {
         chartData[1].push({
           time: newDate.toUTCString(),
           consumption2: consumption - Math.round( Math.random() * 500 ),
-          demandSeries2: demand - Math.round( Math.random() * 500 ),
+          demand2: demand - Math.round( Math.random() * 500 ),
           temperature2: temperature + Math.round( (Math.random()-0.5) * 500 )
         }
       );
