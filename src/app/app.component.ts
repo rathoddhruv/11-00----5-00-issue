@@ -124,20 +124,13 @@ export class AppComponent implements OnInit {
       let consumptionState = consumptionSeries.columns.template.states.create(
         "hover"
       );
-      demandSeries.bullets.push(new am4charts.CircleBullet());
-      let demandBullet2 = demandSeries2.bullets.push(
-        new am4charts.CircleBullet()
-      );
-      let weatherBullet = weatherSeries.bullets.push(
-        new am4charts.CircleBullet()
-      );
-      let weatherBullet2 = weatherSeries2.bullets.push(
-        new am4charts.CircleBullet()
-      );
-
+        demandSeries.bullets.push(new am4charts.CircleBullet());
+            let demandBullet2 = demandSeries2.bullets.push(new am4charts.CircleBullet());
+            let weatherBullet = weatherSeries.bullets.push(new am4charts.CircleBullet());
+            let weatherBullet2 = weatherSeries2.bullets.push(new am4charts.CircleBullet());
+            
       // Create series
-      consumptionSeries.columns.template.cursorOverStyle =
-        MouseCursorStyle.pointer;
+      consumptionSeries.columns.template.cursorOverStyle = MouseCursorStyle.pointer;
       consumptionSeries.sequencedInterpolation = false;
       consumptionSeries.dataFields.valueY = "consumption";
       consumptionSeries.dataFields.dateX = "time";
@@ -186,55 +179,56 @@ export class AppComponent implements OnInit {
       // consumptionState.properties.fillOpacity = 0.9;
       consumptionSeries2.hiddenInLegend = true;
 
-      demandSeries.defaultState.transitionDuration = this.cart.graphAnimationSpeed;
-      demandSeries.hiddenState.transitionDuration = this.cart.graphAnimationSpeed;
-      demandSeries.sequencedInterpolation = true;
-      demandSeries.dataFields.valueY = "demand";
-      demandSeries.dataFields.dateX = "time";
-      demandSeries.yAxis = demandAxis;
-      demandSeries.name = "Demand";
-      demandSeries.stroke = am4core.color("red");
-      demandSeries.propertyFields.strokeDasharray = "dashLength";
-      demandSeries.strokeWidth = 2;
-      demandSeries.stroke = am4core.color("#E03445");
 
-      demandSeries.tooltip.background.stroke = am4core.color("#E03445");
-      demandSeries.tooltip.label.fontWeight = "bold";
-      demandSeries.connect = false;
-      demandSeries.tooltip.background.fill = am4core.color("#ffffff");
-      demandSeries.tooltip.label.fill = am4core.color("#000000");
-      demandSeries.id = "demand1";
-      demandSeries.tooltip.background.strokeWidth = 2;
-      demandSeries.tooltip.getFillFromObject = false;
-      demandSeries.tooltipText = "{valueY.formatNumber('#,###.')} " + +"";
-      demandSeries.groupFields.valueY = "high";
-      demandSeries.tensionX = 0.77;
+ demandSeries.defaultState.transitionDuration = this.cart.graphAnimationSpeed;
+            demandSeries.hiddenState.transitionDuration = this.cart.graphAnimationSpeed;
+            demandSeries.sequencedInterpolation = true;
+            demandSeries.dataFields.valueY = "demand";
+            demandSeries.dataFields.dateX = "time"
+            demandSeries.yAxis = demandAxis;
+            demandSeries.name = "Demand";
+            demandSeries.stroke = am4core.color("red");
+            demandSeries.propertyFields.strokeDasharray = "dashLength";
+            demandSeries.strokeWidth = 2;
+            demandSeries.stroke = am4core.color("#E03445");
 
-      demandSeries2.sequencedInterpolation = true;
-      demandSeries2.dataFields.valueY = "demand";
-      demandSeries2.dataFields.dateX = "time";
-      demandSeries2.yAxis = demandAxis;
-      demandSeries2.name = "Demand2";
-      demandSeries2.stroke = am4core.color("red");
-      demandSeries2.propertyFields.strokeDasharray = "dashLength";
-      demandSeries2.strokeWidth = 2;
-      demandSeries2.stroke = am4core.color("#D90368");
-      demandSeries2.tooltip.background.stroke = am4core.color("#D90368");
-      demandSeries2.tooltip.label.fontWeight = "bold";
-      demandSeries2.connect = false;
-      demandSeries2.tooltip.background.fill = am4core.color("#ffffff");
-      demandSeries2.tooltip.label.fill = am4core.color("#000000");
-      demandSeries2.id = "demand2";
-      demandSeries2.tooltip.background.strokeWidth = 2;
-      demandSeries2.tooltip.getFillFromObject = false;
-      demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " + +"";
-      demandSeries2.tensionX = 0.77;
-      demandSeries2.strokeDasharray = "8,4";
-      demandSeries2.hiddenInLegend = true;
-      demandSeries2.hide();
-      demandSeries2.hiddenState;
-      //////////////////////////////////////////////
-      demandBullet2.fill = am4core.color("red");
+            demandSeries.tooltip.background.stroke = am4core.color("#E03445");
+            demandSeries.tooltip.label.fontWeight = 'bold';
+            demandSeries.connect = false;
+            demandSeries.tooltip.background.fill = am4core.color("#ffffff");
+            demandSeries.tooltip.label.fill = am4core.color("#000000");
+            demandSeries.id = 'demand1';
+            demandSeries.tooltip.background.strokeWidth = 2;
+            demandSeries.tooltip.getFillFromObject = false;
+            demandSeries.tooltipText = "{valueY.formatNumber('#,###.')} " +  + '';
+            demandSeries.groupFields.valueY = "high";
+            demandSeries.tensionX = 0.77;
+
+            demandSeries2.sequencedInterpolation = true;
+            demandSeries2.dataFields.valueY = "demand";
+            demandSeries2.dataFields.dateX = "time"
+            demandSeries2.yAxis = demandAxis;
+            demandSeries2.name = "Demand2";
+            demandSeries2.stroke = am4core.color("red");
+            demandSeries2.propertyFields.strokeDasharray = "dashLength";
+            demandSeries2.strokeWidth = 2;
+            demandSeries2.stroke = am4core.color("#D90368");
+            demandSeries2.tooltip.background.stroke = am4core.color("#D90368");
+            demandSeries2.tooltip.label.fontWeight = 'bold';
+            demandSeries2.connect = false;
+            demandSeries2.tooltip.background.fill = am4core.color("#ffffff");
+            demandSeries2.tooltip.label.fill = am4core.color("#000000");
+            demandSeries2.id = 'demand2';
+            demandSeries2.tooltip.background.strokeWidth = 2;
+            demandSeries2.tooltip.getFillFromObject = false;
+            demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " +  + '';
+            demandSeries2.tensionX = 0.77;
+            demandSeries2.strokeDasharray = '8,4';
+            demandSeries2.hiddenInLegend = true;
+            demandSeries2.hide();
+            demandSeries2.hiddenState;
+            //////////////////////////////////////////////
+            demandBullet2.fill = am4core.color("red");
 
       chart.dateFormatter.dateFormat = {
         year: "numeric",
