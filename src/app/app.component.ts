@@ -47,8 +47,8 @@ export class AppComponent implements OnInit {
     let demandAxis = chart.yAxes.push(new am4charts.ValueAxis());
     demandAxis.renderer.opposite = true;
     let weatherAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    
     let consumptionSeries = chart.series.push(new am4charts.ColumnSeries());
-
     let demandSeries = chart.series.push(new am4charts.LineSeries());
     let weatherSeries = chart.series.push(new am4charts.LineSeries());
 
