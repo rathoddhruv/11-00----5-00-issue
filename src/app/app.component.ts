@@ -23,7 +23,7 @@ import {
 } from "@angular/core";
 import { MouseCursorStyle } from "@amcharts/amcharts4/core";
 import { FormBuilder, FormGroup, FormArray, FormControl } from "@angular/forms";
-import { startOfDay, endOfDay, addHours } from "date-fns";
+import { startOfDay, endOfDay, addHours, addDays } from "date-fns";
 useTheme(am4themes_animated);
 @Component({
   selector: "my-app",
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
     weatherSeries2.zIndex = 20;
 
     this.zone.runOutsideAngular(() => {
-      // chart.dateFormatter.utc = true;
+      chart.dateFormatter.utc = true;
       chart.dateFormatter.inputDateFormat = "i";
       chart.cursor = new XYCursor();
       chart.cursor.behavior = "panX";
@@ -378,13 +378,13 @@ export class AppComponent implements OnInit {
       this.chart.map.getKey('demand2').data = this.generateChartData(0)[1];
       this.chart.map.getKey('consumption2').data = this.generateChartData(0)[1];
       // this.chart.data = this.generateChartData(0);
-      setTimeout(() => {
-        (this.chart.series
-          .values[2] as am4charts.LineSeries).data = this.generateChartData(1);
-      }, 200);
+      // setTimeout(() => {
+      //   (this.chart.series
+      //     .values[2] as am4charts.LineSeries).data = this.generateChartData(1);
+      // }, 200);
       (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
         startOfDay(new Date()),
-        endOfDay(new Date()),
+        endOfDay(addDays(new Date(), 12) ),
         true,
         true
       );
@@ -429,7 +429,7 @@ export class AppComponent implements OnInit {
   generateChartData(isWeather) {
     var chartData = [];
     var firstDate = new Date();
-    firstDate.setDate(firstDate.getDate() - 100);
+    firstDate.setDate(firstDate.getDate());
     firstDate.setHours(0, 0, 0, 0);
     var newDate = new Date(firstDate);
     var consumption = 1600;
