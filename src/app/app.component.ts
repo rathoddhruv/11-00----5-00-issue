@@ -82,15 +82,15 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.minGridDistance = 50;
       dateAxis.renderer.cellStartLocation = 0.1;
       dateAxis.renderer.cellEndLocation = 0.9;
-      dateAxis.min = (addYears(startOfYear(new Date()), -1)).getTime();
-      dateAxis.max = (endOfYear(new Date())).getTime();
+      // dateAxis.min = (addYears(startOfYear(new Date()), -1)).getTime();
+      // dateAxis.max = (endOfYear(new Date())).getTime();
       dateAxis.tooltipDateFormat = "hh:mm a, d MMMM yyyy";
       dateAxis.tooltipText = "{HH:mm:ss}";
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
        dateAxis.baseInterval = { timeUnit: 'hour', count: 1 };
 
-      consumptionAxis.title.text = "a";
+      consumptionAxis.title.text = "demand";
       consumptionAxis.title.fill = am4core.color("#0A7696");
       consumptionAxis.renderer.labels.template.fill = am4core.color("#0A7696");
       consumptionAxis.strictMinMax = false;
@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
       consumptionAxis.renderer.opposite = false;
       consumptionAxis.renderer.labels.template.fontWeight = "bold";
 
-      demandAxis.title.text = "b";
+      demandAxis.title.text = "consumption";
       demandAxis.title.fill = am4core.color("#E14555");
       demandAxis.renderer.labels.template.fill = am4core.color("#E14555");
       demandAxis.renderer.grid.template.disabled = true;
@@ -182,9 +182,8 @@ export class AppComponent implements OnInit {
       weatherSeries2.tooltipText =
         "{valueY.formatNumber('#,###.')}" + "° F" + "";
       weatherSeries2.groupFields.valueY = "average";
-      weatherSeries2.hiddenInLegend = true;
-      weatherSeries2.hide();
-      weatherSeries2.hiddenState;
+  
+      
 
       // Create series
       consumptionSeries.columns.template.cursorOverStyle =
@@ -235,7 +234,7 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')} " + +"";
       consumptionSeries2.columns.template.width = am4core.percent(100);
       // consumptionState.properties.fillOpacity = 0.9;
-      consumptionSeries2.hiddenInLegend = true;
+     
 
       demandSeries.sequencedInterpolation = true;
       demandSeries.dataFields.valueY = "demand";
@@ -280,8 +279,7 @@ export class AppComponent implements OnInit {
       demandSeries2.tensionX = 0.77;
       demandSeries2.strokeDasharray = "8,4";
       demandSeries2.hiddenInLegend = true;
-      demandSeries2.hide();
-      demandSeries2.hiddenState;
+  
       //////////////////////////////////////////////
       demandBullet2.fill = am4core.color("red");
 
@@ -429,7 +427,7 @@ export class AppComponent implements OnInit {
   }
 
   generateChartData(isWeather) {
-    var chartData = [];
+    var chartData = [[],[]];
     var firstDate = new Date();
     firstDate.setDate(firstDate.getDate());
     firstDate.setHours(0, 0, 0, 0);
@@ -439,7 +437,7 @@ export class AppComponent implements OnInit {
     var temperature = 1600;
 
     let step = 0;
-    for (var i = 0; i < 400; i++) {
+    for (var i = 0; i < 40; i++) {
       // we create date objects here. In your data, you can have date strings
       // and then set format of your dates using chart.dataDateFormat property,
       // however when possible, use date objects, as this will speed up chart rendering.
