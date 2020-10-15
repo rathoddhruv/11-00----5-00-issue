@@ -64,6 +64,13 @@ export class AppComponent implements OnInit {
     weatherSeries2.zIndex = 20;
 
     this.zone.runOutsideAngular(() => {
+      // Add legend
+            chart.legend = new am4charts.Legend();
+            chart.legend.position = "absolute";
+            chart.legend.parent = chart.bottomAxesContainer;
+            chart.scrollbarX = new am4charts.XYChartScrollbar();
+            chart.scrollbarX.parent = chart.bottomAxesContainer;
+            
       chart.dateFormatter.utc = true;
       chart.dateFormatter.inputDateFormat = "i";
       chart.cursor = new XYCursor();
