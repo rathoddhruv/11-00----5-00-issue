@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
             chart.legend.parent = chart.bottomAxesContainer;
             chart.scrollbarX = new am4charts.XYChartScrollbar();
             chart.scrollbarX.parent = chart.bottomAxesContainer;
-            
+
       chart.dateFormatter.utc = true;
       chart.dateFormatter.inputDateFormat = "i";
       chart.cursor = new XYCursor();
@@ -475,9 +475,9 @@ export class AppComponent implements OnInit {
         });
         chartData[1].push({
           time: newDate.toUTCString(),
-          consumption2: consumption - Math.random() * 100,
-          demandSeries2: demand - Math.random() * 50,
-          temperature2: temperature + Math.random() * 50
+          consumption2: consumption - Math.round( Math.random() * 100 ),
+          demandSeries2: demand - Math.round( Math.random() * 100 ),
+          temperature2: temperature + Math.round( Math.random() * 100 )
         }
       );
     }
