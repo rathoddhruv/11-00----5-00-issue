@@ -23,7 +23,7 @@ import {
 } from "@angular/core";
 import { MouseCursorStyle } from "@amcharts/amcharts4/core";
 import { FormBuilder, FormGroup, FormArray, FormControl } from "@angular/forms";
-import { startOfDay, endOfDay, addHours, addDays } from "date-fns";
+import { startOfDay, endOfDay, addHours, addDays, addYears, startOfYear, endOfYear } from "date-fns";
 useTheme(am4themes_animated);
 @Component({
   selector: "my-app",
@@ -82,7 +82,8 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.minGridDistance = 50;
       dateAxis.renderer.cellStartLocation = 0.1;
       dateAxis.renderer.cellEndLocation = 0.9;
-
+      dateAxis.min = (addYears(startOfYear(new Date()), -1)).getTime();
+      dateAxis.max = (endOfYear(new Date())).getTime();
       dateAxis.tooltipDateFormat = "hh:mm a, d MMMM yyyy";
       dateAxis.tooltipText = "{HH:mm:ss}";
       dateAxis.renderer.grid.template.disabled = true;
@@ -372,7 +373,8 @@ export class AppComponent implements OnInit {
       });
 
       this.chart = chart;
-      
+      let data = this.generateChartData(0);
+      debugger
       this.chart.map.getKey('demand1').data = this.generateChartData(0)[0];
       this.chart.map.getKey('consumption1').data = this.generateChartData(0)[0];
       this.chart.map.getKey('demand2').data = this.generateChartData(0)[1];
@@ -459,20 +461,20 @@ export class AppComponent implements OnInit {
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 10
       );
 
-      chartData.push([
+      chartData[0].push(
         {
           time: newDate.toUTCString(),
           consumption: consumption,
           demand: demand,
           temperature: temperature
-        },
-        {
+        });
+        chartData[1].push({
           time: newDate.toUTCString(),
           consumption2: consumption - Math.random() * 100,
           demandSeries2: demand - Math.random() * 50,
           temperature2: temperature + Math.random() * 50
         }
-      ]);
+      );
     }
     return chartData;
   }
