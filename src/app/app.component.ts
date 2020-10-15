@@ -88,18 +88,96 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
 
+      consumptionAxis.title.text = "[bold]" + +" (" + +")";
+      consumptionAxis.title.fill = am4core.color("#0A7696");
+      consumptionAxis.renderer.labels.template.fill = am4core.color("#0A7696");
+      consumptionAxis.strictMinMax = false;
+      // consumptionAxis.min = response.intervalData[0].baseConsumtionAxisValue;
+      consumptionAxis.renderer.grid.template.disabled = true;
+      consumptionAxis.renderer.opposite = false;
+      consumptionAxis.renderer.labels.template.fontWeight = "bold";
+
+      demandAxis.title.text = "[bold]" + +" (" + +")";
+      demandAxis.title.fill = am4core.color("#E14555");
+      demandAxis.renderer.labels.template.fill = am4core.color("#E14555");
+      demandAxis.renderer.grid.template.disabled = true;
+      demandAxis.renderer.opposite = true;
+      demandAxis.background.fill = am4core.color("#fff");
+      demandAxis.renderer.labels.template.fontWeight = "bold";
+
+      demandAxis.strictMinMax = false;
+      // demandAxis.min = response.intervalData[0].baseDemandAxisValue;
+      demandAxis.title.rotation = 270;
+
+      weatherAxis.title.text = "[bold]Temperature (F)";
+      weatherAxis.title.fill = am4core.color("#70728A");
+      weatherAxis.renderer.labels.template.fill = am4core.color("#70728A");
+      weatherAxis.background.fill = am4core.color("#fff");
+      weatherAxis.renderer.grid.template.disabled = true;
+      weatherAxis.renderer.opposite = true;
+      weatherAxis.strictMinMax = false;
+      // weatherAxis.min = response.intervalData[0].baseDemandAxisValue;
+      weatherAxis.title.rotation = 270;
+      weatherAxis.renderer.labels.template.fontWeight = "bold";
+      weatherAxis.hide();
+
       // consumptionState.properties.fillOpacity = 0.9;
       demandSeries.dataFields.valueY = "demand";
       demandSeries.dataFields.dateX = "time";
-      dateAxis.renderer.minGridDistance = 80;
 
       let consumptionState = consumptionSeries.columns.template.states.create(
         "hover"
       );
+      // Create series
+      consumptionSeries.columns.template.cursorOverStyle = MouseCursorStyle.pointer;
+      consumptionSeries.sequencedInterpolation = false;
       consumptionSeries.dataFields.valueY = "consumption";
       consumptionSeries.dataFields.dateX = "time";
-      consumptionSeries.columns.template.cursorOverStyle =
-        MouseCursorStyle.grabbing;
+      consumptionSeries.yAxis = consumptionAxis;
+      consumptionSeries.columns.template.propertyFields.strokeDasharray =
+        "dashLength";
+      consumptionSeries.groupFields.valueY = "sum";
+      consumptionSeries.name = "Consumption";
+      consumptionSeries.columns.template.fillOpacity = 1;
+      consumptionSeries.columns.template.fill = am4core.color("#0C7696");
+      consumptionSeries.stroke = am4core.color("#0C7696");
+      consumptionSeries.tooltip.background.stroke = am4core.color("#0C7696");
+      consumptionSeries.tooltip.label.fontWeight = "bold";
+      consumptionSeries.tooltip.background.fill = am4core.color("#ffffff");
+      consumptionSeries.tooltip.label.fill = am4core.color("#000000");
+      consumptionSeries.id = "consumption1";
+      consumptionSeries.tooltip.background.strokeWidth = 0;
+      consumptionSeries.tooltip.getFillFromObject = false;
+      consumptionSeries.columns.template.tooltipText =
+        "{valueY.formatNumber('#,###.')} " + +"";
+      consumptionSeries.columns.template.width = am4core.percent(100);
+
+      consumptionSeries2.columns.template.cursorOverStyle =
+        MouseCursorStyle.pointer;
+      consumptionSeries2.sequencedInterpolation = false;
+      consumptionSeries2.dataFields.valueY = "value";
+      consumptionSeries2.dataFields.dateX = "time";
+      consumptionSeries2.yAxis = consumptionAxis;
+      consumptionSeries2.columns.template.propertyFields.strokeDasharray =
+        "dashLength";
+      consumptionSeries2.groupFields.valueY = "sum";
+      consumptionSeries2.name = "Consumption2";
+      consumptionSeries2.columns.template.fillOpacity = 1;
+      consumptionSeries2.columns.template.fill = am4core.color("#59C2EC");
+      consumptionSeries2.stroke = am4core.color("#59C2EC");
+      consumptionSeries2.tooltip.background.stroke = am4core.color("#59C2EC");
+      consumptionSeries2.tooltip.label.fontWeight = "bold";
+      consumptionSeries2.tooltip.background.fill = am4core.color("#ffffff");
+      consumptionSeries2.tooltip.label.fill = am4core.color("#000000");
+      consumptionSeries2.id = "consumption2";
+      consumptionSeries2.tooltip.background.strokeWidth = 0;
+      consumptionSeries2.tooltip.getFillFromObject = false;
+      consumptionSeries2.columns.template.tooltipText =
+        "{valueY.formatNumber('#,###.')} " + +"";
+      consumptionSeries2.columns.template.width = am4core.percent(100);
+      // consumptionState.properties.fillOpacity = 0.9;
+      consumptionSeries2.hiddenInLegend = true;
+      consumptionSeries2.hide();
 
       chart.dateFormatter.dateFormat = {
         year: "numeric",
