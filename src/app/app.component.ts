@@ -71,8 +71,6 @@ export class AppComponent implements OnInit {
     weatherSeries.zIndex = 20;
     weatherSeries2.zIndex = 20;
 
-    
-
     this.zone.runOutsideAngular(() => {
       // Add legend
       chart.legend = new am4charts.Legend();
@@ -491,6 +489,16 @@ export class AppComponent implements OnInit {
       });
     }
     return chartData;
+  }
+  recentRange(value: number) {
+    if (7) {
+      this.chart.dateAxis.zoomToDates(
+                new Date(this.graphForm.controls.nodeGraphFormArray['controls'][this.currentActiveGraph].controls['fromDate'].value),
+                new Date(this.graphForm.controls.nodeGraphFormArray['controls'][this.currentActiveGraph].controls['toDate'].value),
+                true, true
+              );
+    } else if (365) {
+    }
   }
 
   ngOnDestroy() {
