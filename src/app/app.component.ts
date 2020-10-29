@@ -463,8 +463,8 @@ export class AppComponent implements OnInit {
 
   recentRange(value: number) {
     if (7) {
-      this.generateChartData(new Date(0), addDays(new Date(), 7), 3600, true);
-      this.chart.dateAxis.zoomToDates(
+      this.generateChartData(new Date(), addDays(new Date(), 7), 3600, true);
+      (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
         new Date(),
         addDays(new Date(), 7),
         true,
