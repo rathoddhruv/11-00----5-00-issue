@@ -49,6 +49,8 @@ export class AppComponent implements OnInit {
 
   chart: am4charts.XYChart = new am4charts.XYChart();
   @ViewChild("chartDiv1", { static: false }) chartDiv1: ElementRef;
+  start = new Date();
+  end = new Date();
 
   ngOnInit() {
     let chart = am4core.create("chartdiv_1", am4charts.XYChart);
@@ -87,7 +89,6 @@ export class AppComponent implements OnInit {
       chart.dateFormatter.utc = true;
       chart.dateFormatter.inputDateFormat = "i";
       chart.cursor = new XYCursor();
-      chart.cursor.xAxis = dateAxis;
       chart.cursor.behavior = "panX";
 
       chart.cursor.behavior = "selectXY";
@@ -352,7 +353,7 @@ export class AppComponent implements OnInit {
 
       this.chart = chart;
       let data = this.generateChartData(
-        new Date(0),
+        new Date(),
         addDays(new Date(), 2),
         3600,
         true
@@ -368,7 +369,7 @@ export class AppComponent implements OnInit {
         this.chart.map.getKey("demand2").data = data[1];
         this.chart.map.getKey("weather2").data = data[1];
       }, 2000);
-      // (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
+      //(this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
       //   startOfDay(new Date()),
       //   endOfDay(addDays(new Date(), 12)),
       //   true,
@@ -388,7 +389,7 @@ export class AppComponent implements OnInit {
       });
 
       // chart.events.on("ready", () => {
-      //    (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
+      //   (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
       // startOfDay(new Date()) ,
       // endOfDay(new Date()),
       // true,
@@ -399,7 +400,7 @@ export class AppComponent implements OnInit {
       //       // Create a range
       //       console.log('datavalidated () => zoomToDates selected');
       //       setTimeout(() => {
-      //         (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
+      //        (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
       //         startOfDay(new Date()) ,
       //         endOfDay(new Date()),
       //         true,
