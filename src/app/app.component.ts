@@ -30,7 +30,9 @@ import {
   addDays,
   addYears,
   startOfYear,
-  endOfYear
+  endOfYear,
+  isBefore,
+  addMonths
 } from "date-fns";
 useTheme(am4themes_animated);
 @Component({
@@ -71,6 +73,9 @@ export class AppComponent implements OnInit {
     weatherSeries.zIndex = 20;
     weatherSeries2.zIndex = 20;
 
+       dateAxis.min = (addYears(startOfYear(new Date()), -2)).getTime();
+          dateAxis.max = (endOfYear(new Date())).getTime();
+
     this.zone.runOutsideAngular(() => {
       // Add legend
       chart.legend = new am4charts.Legend();
@@ -89,7 +94,6 @@ export class AppComponent implements OnInit {
       // let consumptionState = consumptionSeries.columns.template.states.create(
       //   "hover"
       // );
-      chart.scrollbarX = new am4charts.XYChartScrollbar();
       chart.scrollbarX.series.push(consumptionAxis);
 
       dateAxis.renderer.grid.template.location = 0;
@@ -440,24 +444,20 @@ export class AppComponent implements OnInit {
     });
   }
 
-  generateChartData(isWeather) {
+  generateChartData(start: Date, end: Date, interval, isWeather) {
     var chartData = [[], []];
-    var firstDate = new Date();
-    firstDate.setDate(firstDate.getDate());
-    firstDate.setHours(0, 0, 0, 0);
-    var newDate = new Date(firstDate);
     var consumption = 1600;
     var demand = 1600;
     var temperature = 1600;
 
     let step = 0;
-    for (var i = 0; i < 40; i++) {
-      // we create date objects here. In your data, you can have date strings
-      // and then set format of your dates using chart.dataDateFormat property,
-      // however when possible, use date objects, as this will speed up chart rendering.
-
-      newDate = addHours(newDate, 1);
-      // newDate.setMinutes(newDate.getMinutes() + i);
+    var newDate = start;
+    while (isBefore(start, end)) {
+      if (interval == 3600) {
+        newDate = addHours(newDate, 1);
+      } else {
+        newDate = addMonths(newDate, 1);
+      }
 
       if (step >= 60) {
         step = 0;
@@ -490,13 +490,15 @@ export class AppComponent implements OnInit {
     }
     return chartData;
   }
+
   recentRange(value: number) {
     if (7) {
       this.chart.dateAxis.zoomToDates(
-                new Date(this.graphForm.controls.nodeGraphFormArray['controls'][this.currentActiveGraph].controls['fromDate'].value),
-                new Date(this.graphForm.controls.nodeGraphFormArray['controls'][this.currentActiveGraph].controls['toDate'].value),
-                true, true
-              );
+        new Date( ),
+        new Date( ),
+        true,
+        true
+      );
     } else if (365) {
     }
   }
