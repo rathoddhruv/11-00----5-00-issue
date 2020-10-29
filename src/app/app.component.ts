@@ -388,7 +388,7 @@ export class AppComponent implements OnInit {
       });
 
       this.chart = chart;
-      let data = this.generateChartData(0);
+      let data = this.generateChartData(new Date(0), addDays(new Date(),200),3600,true);
       debugger;
       this.chart.map.getKey("demand1").data = data[0];
       this.chart.map.getKey("consumption1").data = data[0];
@@ -493,9 +493,10 @@ export class AppComponent implements OnInit {
 
   recentRange(value: number) {
     if (7) {
+      this.generateChartData(new Date(0), addDays(new Date(),7),3600,true);
       this.chart.dateAxis.zoomToDates(
         new Date( ),
-        new Date( ),
+        addDays(new Date(),7),
         true,
         true
       );
