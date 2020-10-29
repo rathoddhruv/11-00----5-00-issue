@@ -73,8 +73,8 @@ export class AppComponent implements OnInit {
     weatherSeries.zIndex = 20;
     weatherSeries2.zIndex = 20;
 
-       dateAxis.min = (addYears(startOfYear(new Date()), -2)).getTime();
-          dateAxis.max = (endOfYear(new Date())).getTime();
+    dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
+    dateAxis.max = endOfYear(new Date()).getTime();
 
     this.zone.runOutsideAngular(() => {
       // Add legend
@@ -300,44 +300,7 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')}" + "° F" + "";
       weatherSeries2.groupFields.valueY = "average";
 
-      chart.dateFormatter.dateFormat = {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        timeZone: "America/Chicago"
-      };
-      dateAxis.dateFormats.setKey("hour", {
-        hour: "numeric",
-        minute: "numeric",
-        timeZone: "America/Chicago"
-      });
-      dateAxis.dateFormats.setKey("minute", {
-        hour: "numeric",
-        minute: "numeric",
-        timeZone: "America/Chicago"
-      });
-      dateAxis.dateFormats.setKey("second", {
-        hour: "numeric",
-        minute: "numeric",
-        timeZone: "America/Chicago"
-      });
-      dateAxis.periodChangeDateFormats.setKey("hour", {
-        hour: "numeric",
-        minute: "numeric",
-        timeZone: "America/Chicago"
-      });
-      dateAxis.periodChangeDateFormats.setKey("minute", {
-        hour: "numeric",
-        minute: "numeric",
-        timeZone: "America/Chicago"
-      });
-      dateAxis.periodChangeDateFormats.setKey("second", {
-        hour: "numeric",
-        minute: "numeric",
-        timeZone: "America/Chicago"
-      });
+      
 
       am4core.getInteraction().body.events.on("keydown", ev => {
         console.log("keyboard keydown");
@@ -388,7 +351,12 @@ export class AppComponent implements OnInit {
       });
 
       this.chart = chart;
-      let data = this.generateChartData(new Date(0), addDays(new Date(),200),3600,true);
+      let data = this.generateChartData(
+        new Date(0),
+        addDays(new Date(), 2),
+        3600,
+        true
+      );
       debugger;
       this.chart.map.getKey("demand1").data = data[0];
       this.chart.map.getKey("consumption1").data = data[0];
@@ -400,12 +368,12 @@ export class AppComponent implements OnInit {
         this.chart.map.getKey("demand2").data = data[1];
         this.chart.map.getKey("weather2").data = data[1];
       }, 2000);
-      (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
-        startOfDay(new Date()),
-        endOfDay(addDays(new Date(), 12)),
-        true,
-        true
-      );
+      // (this.chart.xAxes.values[0] as am4charts.DateAxis).zoomToDates(
+      //   startOfDay(new Date()),
+      //   endOfDay(addDays(new Date(), 12)),
+      //   true,
+      //   true
+      // );
       consumptionSeries.columns.template.events.on("hit", ev => {
         console.log(ev.target.dataItem);
 
@@ -452,7 +420,7 @@ export class AppComponent implements OnInit {
 
     let step = 0;
     var newDate = start;
-    while (isBefore(start, end)) {
+    while (isBefore(newDate, end)) {
       if (interval == 3600) {
         newDate = addHours(newDate, 1);
       } else {
@@ -481,22 +449,23 @@ export class AppComponent implements OnInit {
         demand: demand,
         temperature: temperature
       });
-      chartData[1].push({
-        time: newDate.toUTCString(),
-        consumption2: consumption - Math.round(Math.random() * 500),
-        demand2: demand - Math.round(Math.random() * 500),
-        temperature2: temperature + Math.round((Math.random() - 0.5) * 500)
-      });
+      // chartData[1].push({
+      //   time: newDate.toUTCString(),
+      //   consumption2: consumption - Math.round(Math.random() * 500),
+      //   demand2: demand - Math.round(Math.random() * 500),
+      //   temperature2: temperature + Math.round((Math.random() - 0.5) * 500)
+      // });
     }
+    debugger;
     return chartData;
   }
 
   recentRange(value: number) {
     if (7) {
-      this.generateChartData(new Date(0), addDays(new Date(),7),3600,true);
+      this.generateChartData(new Date(0), addDays(new Date(), 7), 3600, true);
       this.chart.dateAxis.zoomToDates(
-        new Date( ),
-        addDays(new Date(),7),
+        new Date(),
+        addDays(new Date(), 7),
         true,
         true
       );
