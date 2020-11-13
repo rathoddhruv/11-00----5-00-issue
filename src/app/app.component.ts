@@ -301,8 +301,6 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')}" + "° F" + "";
       weatherSeries2.groupFields.valueY = "average";
 
-      
-
       am4core.getInteraction().body.events.on("keydown", ev => {
         console.log("keyboard keydown");
         // consumptionSeries.columns.template.cursorOverStyle = MouseCursorStyle.default;
@@ -471,6 +469,13 @@ export class AppComponent implements OnInit {
         true
       );
     } else if (365) {
+      this.generateChartData(new Date(), addYears(new Date(), -3), 3600, true);
+      (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+        new Date(),
+        addYears(new Date(), -3),
+        true,
+        true
+      );
     }
   }
 
