@@ -454,6 +454,11 @@ export class AppComponent implements OnInit {
       //   temperature2: temperature + Math.round((Math.random() - 0.5) * 500)
       // });
     }
+    if (interval == 3600) {
+      this.chart.dateAxis.baseInterval = { timeUnit: "hour", count: 1 };
+    } else {
+      this.chart.dateAxis.baseInterval = { timeUnit: "month", count: 1 };
+    }
     debugger;
     return chartData;
   }
@@ -474,13 +479,15 @@ export class AppComponent implements OnInit {
         new Date(),
         addDays(new Date(), 7),
         true,
+        true,
         true
       );
     } else if (value === 365) {
-      this.generateChartData(addYears(new Date(), -3),new Date(), 0, true);
+      this.generateChartData(addYears(new Date(), -3), new Date(), 0, true);
       (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
         new Date(),
         addYears(new Date(), -3),
+        true,
         true,
         true
       );
