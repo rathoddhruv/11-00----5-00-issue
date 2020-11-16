@@ -459,6 +459,15 @@ export class AppComponent implements OnInit {
     return chartData;
   }
 
+  zoomChange(start, end) {
+     (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+        start, 
+        end,
+        true,
+        true
+      );
+  }
+
   recentRange(value: number) {
     if (7) {
       this.generateChartData(new Date(), addDays(new Date(), 7), 3600, true);
@@ -469,7 +478,7 @@ export class AppComponent implements OnInit {
         true
       );
     } else if (365) {
-      this.generateChartData(new Date(), addYears(new Date(), -3), 3600, true);
+      this.generateChartData(new Date(), addYears(new Date(), -3), 0, true);
       (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
         new Date(),
         addYears(new Date(), -3),
