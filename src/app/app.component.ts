@@ -467,8 +467,16 @@ export class AppComponent implements OnInit {
   }
 
   recentRange(value: number) {
+    let data : any[];
     if (value === 7) {
-      this.generateChartData(new Date(), addDays(new Date(), 7), 3600, true);
+      this.chart.dateAxis.baseInterval = { timeUnit: "hour", count: 1 };
+
+      data = this.generateChartData(
+        new Date(),
+        addDays(new Date(), 7),
+        3600,
+        true
+      );
       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
         new Date(),
         addDays(new Date(), 7),
@@ -476,9 +484,17 @@ export class AppComponent implements OnInit {
         true,
         true
       );
-      this.chart.dateAxis.baseInterval = { timeUnit: "hour", count: 1 };
     } else if (value === 365) {
-      this.generateChartData(addYears(new Date(), -3), new Date(), 0, true);
+      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
+        timeUnit: "month",
+        count: 1
+      };
+     data = this.generateChartData(
+        addYears(new Date(), -3),
+        new Date(),
+        0,
+        true
+      );
       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
         new Date(),
         addYears(new Date(), -3),
@@ -486,11 +502,11 @@ export class AppComponent implements OnInit {
         true,
         true
       );
-      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
-        timeUnit: "month",
-        count: 1
-      };
     }
+
+    this.chart.map.getKey("demand1").data = data[0];
+    this.chart.map.getKey("consumption1").data = data[0];
+    this.chart.map.getKey("weather1").data = data[0];
   }
 
   ngOnDestroy() {
