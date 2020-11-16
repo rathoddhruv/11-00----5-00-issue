@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
     weatherSeries2.zIndex = 20;
 
     dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
-    dateAxis.max = endOfYear(new Date()).getTime();
+    dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
 
     this.zone.runOutsideAngular(() => {
       // Add legend
@@ -98,6 +98,7 @@ export class AppComponent implements OnInit {
       chart.scrollbarX.series.push(consumptionAxis);
 
       dateAxis.renderer.grid.template.location = 0;
+      dateAxis.id = "dateAxis";
       // dateAxis.renderer.grid.template.location = 0.5;
       dateAxis.renderer.labels.template.location = 0;
       dateAxis.renderer.minGridDistance = 50;
@@ -447,17 +448,10 @@ export class AppComponent implements OnInit {
         demand: demand,
         temperature: temperature
       });
-      // chartData[1].push({
-      //   time: newDate.toUTCString(),
-      //   consumption2: consumption - Math.round(Math.random() * 500),
-      //   demand2: demand - Math.round(Math.random() * 500),
-      //   temperature2: temperature + Math.round((Math.random() - 0.5) * 500)
-      // });
     }
+
     if (interval == 3600) {
-      this.chart.dateAxis.baseInterval = { timeUnit: "hour", count: 1 };
     } else {
-      this.chart.dateAxis.baseInterval = { timeUnit: "month", count: 1 };
     }
     debugger;
     return chartData;
@@ -475,22 +469,27 @@ export class AppComponent implements OnInit {
   recentRange(value: number) {
     if (value === 7) {
       this.generateChartData(new Date(), addDays(new Date(), 7), 3600, true);
-      (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
         new Date(),
         addDays(new Date(), 7),
         true,
         true,
         true
       );
+      this.chart.dateAxis.baseInterval = { timeUnit: "hour", count: 1 };
     } else if (value === 365) {
       this.generateChartData(addYears(new Date(), -3), new Date(), 0, true);
-      (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
         new Date(),
         addYears(new Date(), -3),
         true,
         true,
         true
       );
+      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
+        timeUnit: "month",
+        count: 1
+      };
     }
   }
 
