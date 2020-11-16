@@ -474,13 +474,13 @@ export class AppComponent implements OnInit {
 
       data = this.generateChartData(
        
-        addDays(new Date(), 7), new Date(),
+        addDays(new Date(), -7), new Date(),
         3600,
         true
       );
       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
         
-        addDays(new Date(), 7),new Date(),
+        addDays(new Date(), -7),new Date(),
         true,
         true,
         true
