@@ -351,12 +351,11 @@ export class AppComponent implements OnInit {
 
       this.chart = chart;
       let data = this.generateChartData(
+        addYears(new Date(), -3),
         new Date(),
-        addDays(new Date(), 2),
-        3600,
+        0,
         true
       );
-      debugger;
       this.chart.map.getKey("demand1").data = data[0];
       this.chart.map.getKey("consumption1").data = data[0];
       this.chart.map.getKey("weather1").data = data[0];
@@ -478,8 +477,7 @@ export class AppComponent implements OnInit {
         true
       );
     } else if (value === 365) {
-      debugger;
-      this.generateChartData(new Date(), addYears(new Date(), -3), 0, true);
+      this.generateChartData(addYears(new Date(), -3),new Date(), 0, true);
       (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
         new Date(),
         addYears(new Date(), -3),
