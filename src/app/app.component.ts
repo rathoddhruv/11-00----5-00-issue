@@ -473,14 +473,14 @@ export class AppComponent implements OnInit {
        (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = { timeUnit: "hour", count: 1 };
 
       data = this.generateChartData(
-        new Date(),
-        addDays(new Date(), 7),
+       
+        addDays(new Date(), 7), new Date(),
         3600,
         true
       );
       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
-        new Date(),
-        addDays(new Date(), 7),
+        
+        addDays(new Date(), 7),new Date(),
         true,
         true,
         true
@@ -497,8 +497,8 @@ export class AppComponent implements OnInit {
         true
       );
       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
-        new Date(),
-        addYears(new Date(), -3),
+        
+        addYears(new Date(), -3),new Date(),
         true,
         true,
         true
