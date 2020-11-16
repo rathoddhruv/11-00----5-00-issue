@@ -110,7 +110,7 @@ export class AppComponent implements OnInit {
       dateAxis.tooltipText = "{HH:mm:ss}";
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
-      dateAxis.baseInterval = { timeUnit: "hour", count: 1 };
+      dateAxis.baseInterval = { timeUnit: "month", count: 1 };
 
       consumptionAxis.title.text = "consumption";
       consumptionAxis.title.fill = am4core.color("#0A7696");
@@ -350,23 +350,23 @@ export class AppComponent implements OnInit {
         chart.cursorOverStyle = am4core.MouseCursorStyle.default;
       });
 
-      this.chart = chart;
+      
       let data = this.generateChartData(
         addYears(new Date(), -3),
         new Date(),
         0,
         true
       );
-      this.chart.map.getKey("demand1").data = data[0];
-      this.chart.map.getKey("consumption1").data = data[0];
-      this.chart.map.getKey("weather1").data = data[0];
+      chart.map.getKey("demand1").data = data[0];
+      chart.map.getKey("consumption1").data = data[0];
+      chart.map.getKey("weather1").data = data[0];
 
       // this.chart.data = this.generateChartData(0);
-      setTimeout(() => {
-        this.chart.map.getKey("consumption2").data = data[1];
-        this.chart.map.getKey("demand2").data = data[1];
-        this.chart.map.getKey("weather2").data = data[1];
-      }, 2000);
+      // setTimeout(() => {
+      //   chart.map.getKey("consumption2").data = data[1];
+      //   chart.map.getKey("demand2").data = data[1];
+      //   chart.map.getKey("weather2").data = data[1];
+      // }, 2000);
       //(this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
       //   startOfDay(new Date()),
       //   endOfDay(addDays(new Date(), 12)),
@@ -408,6 +408,7 @@ export class AppComponent implements OnInit {
       //       }, 50);
 
       //     });
+      this.chart = chart;
     });
   }
 
@@ -469,7 +470,7 @@ export class AppComponent implements OnInit {
   recentRange(value: number) {
     let data : any[];
     if (value === 7) {
-      this.chart.dateAxis.baseInterval = { timeUnit: "hour", count: 1 };
+       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = { timeUnit: "hour", count: 1 };
 
       data = this.generateChartData(
         new Date(),
