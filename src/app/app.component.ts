@@ -34,6 +34,7 @@ import {
   isBefore,
   addMonths
 } from "date-fns";
+import * as denver from "./denver.json";
 useTheme(am4themes_animated);
 @Component({
   selector: "my-app",
@@ -67,6 +68,8 @@ export class AppComponent implements OnInit {
     let consumptionSeries2 = chart.series.push(new am4charts.ColumnSeries());
     let demandSeries2 = chart.series.push(new am4charts.LineSeries());
     let weatherSeries2 = chart.series.push(new am4charts.LineSeries());
+
+    let denverInterval = denver;
 
     consumptionSeries.zIndex = 10;
     consumptionSeries2.zIndex = 10;
@@ -350,7 +353,6 @@ export class AppComponent implements OnInit {
         chart.cursorOverStyle = am4core.MouseCursorStyle.default;
       });
 
-      
       let data = this.generateChartData(
         addYears(new Date(), -3),
         new Date(),
@@ -455,7 +457,8 @@ export class AppComponent implements OnInit {
     } else {
     }
     debugger;
-    return chartData;
+    // return chartData;
+    return denver;
   }
 
   zoomChange(start, end) {
@@ -468,19 +471,22 @@ export class AppComponent implements OnInit {
   }
 
   recentRange(value: number) {
-    let data : any[];
+    let data: any[];
     if (value === 7) {
-       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = { timeUnit: "hour", count: 1 };
+      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
+        timeUnit: "hour",
+        count: 1
+      };
 
       data = this.generateChartData(
-       
-        addDays(new Date(), -7), new Date(),
+        addDays(new Date(), -7),
+        new Date(),
         3600,
         true
       );
       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
-        
-        addDays(new Date(), -7),new Date(),
+        addDays(new Date(), -7),
+        new Date(),
         true,
         true,
         true
@@ -490,15 +496,15 @@ export class AppComponent implements OnInit {
         timeUnit: "month",
         count: 1
       };
-     data = this.generateChartData(
+      data = this.generateChartData(
         addYears(new Date(), -3),
         new Date(),
         0,
         true
       );
       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
-        
-        addYears(new Date(), -3),new Date(),
+        addYears(new Date(), -3),
+        new Date(),
         true,
         true,
         true
