@@ -34,7 +34,7 @@ import {
   isBefore,
   addMonths
 } from "date-fns";
-import * as denver from "./denver.json";
+import * as denver from "./intervalData/denver.json";
 useTheme(am4themes_animated);
 @Component({
   selector: "my-app",
@@ -164,7 +164,7 @@ export class AppComponent implements OnInit {
       consumptionSeries.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
       consumptionSeries.sequencedInterpolation = false;
-      consumptionSeries.dataFields.valueY = "consumption";
+      consumptionSeries.dataFields.valueY = "value";
       consumptionSeries.dataFields.dateX = "time";
       consumptionSeries.yAxis = consumptionAxis;
       consumptionSeries.columns.template.propertyFields.strokeDasharray =
@@ -188,7 +188,7 @@ export class AppComponent implements OnInit {
       consumptionSeries2.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
       consumptionSeries2.sequencedInterpolation = false;
-      consumptionSeries2.dataFields.valueY = "consumption2";
+      consumptionSeries2.dataFields.valueY = "value2";
       consumptionSeries2.dataFields.dateX = "time";
       consumptionSeries2.yAxis = consumptionAxis;
       consumptionSeries2.columns.template.propertyFields.strokeDasharray =
@@ -416,7 +416,7 @@ export class AppComponent implements OnInit {
 
   generateChartData(start: Date, end: Date, interval, isWeather) {
     var chartData = [[], []];
-    var consumption = 1600;
+    var value = 1600;
     var demand = 1600;
     var temperature = 1600;
 
@@ -435,9 +435,7 @@ export class AppComponent implements OnInit {
         step = step + 5;
       }
 
-      consumption += Math.round(
-        (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
-      );
+      value += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       demand += Math.round(
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
@@ -447,7 +445,7 @@ export class AppComponent implements OnInit {
 
       chartData[0].push({
         time: newDate.toUTCString(),
-        consumption: consumption,
+        value: value,
         demand: demand,
         temperature: temperature
       });
@@ -457,7 +455,7 @@ export class AppComponent implements OnInit {
     } else {
     }
     debugger;
-    // return chartData;
+    return chartData;
     return denver;
   }
 
@@ -471,7 +469,7 @@ export class AppComponent implements OnInit {
   }
 
   recentRange(value: number) {
-    let data: any[];
+    let data: any;
     if (value === 7) {
       (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
         timeUnit: "hour",
