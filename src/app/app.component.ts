@@ -34,7 +34,7 @@ import {
   isBefore,
   addMonths
 } from "date-fns";
-import * as denver from "./intervalData/denver.json";
+import { denverData } from "./intervalData/data";
 useTheme(am4themes_animated);
 @Component({
   selector: "my-app",
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     let demandSeries2 = chart.series.push(new am4charts.LineSeries());
     let weatherSeries2 = chart.series.push(new am4charts.LineSeries());
 
-    let denverInterval = denver;
+    let denverInterval = denverData;
 
     consumptionSeries.zIndex = 10;
     consumptionSeries2.zIndex = 10;
@@ -455,8 +455,8 @@ export class AppComponent implements OnInit {
     } else {
     }
     debugger;
-    return chartData;
-    return denver;
+    // return chartData;
+    return denverData;
   }
 
   zoomChange(start, end) {
