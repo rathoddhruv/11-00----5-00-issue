@@ -34,7 +34,7 @@ import {
   isBefore,
   addMonths
 } from "date-fns";
-import { denverData } from "./intervalData/data";
+import { data } from "./intervalData/denver";
 useTheme(am4themes_animated);
 @Component({
   selector: "my-app",
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     let demandSeries2 = chart.series.push(new am4charts.LineSeries());
     let weatherSeries2 = chart.series.push(new am4charts.LineSeries());
 
-    let denverInterval = denverData;
+
 
     consumptionSeries.zIndex = 10;
     consumptionSeries2.zIndex = 10;
@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
       chart.scrollbarX = new am4charts.XYChartScrollbar();
       chart.scrollbarX.parent = chart.bottomAxesContainer;
 
-      chart.dateFormatter.utc = true;
+      // chart.dateFormatter.utc = true;
       chart.dateFormatter.inputDateFormat = "i";
       chart.cursor = new XYCursor();
       chart.cursor.behavior = "panX";
@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
       dateAxis.tooltipText = "{HH:mm:ss}";
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
-      dateAxis.baseInterval = { timeUnit: "month", count: 1 };
+      dateAxis.baseInterval = { timeUnit: "day", count: 1 };
 
       consumptionAxis.title.text = "consumption";
       consumptionAxis.title.fill = am4core.color("#0A7696");
@@ -456,7 +456,7 @@ export class AppComponent implements OnInit {
     }
     debugger;
     // return chartData;
-    return denverData;
+    return data;
   }
 
   zoomChange(start, end) {
