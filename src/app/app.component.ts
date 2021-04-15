@@ -69,8 +69,6 @@ export class AppComponent implements OnInit {
     let demandSeries2 = chart.series.push(new am4charts.LineSeries());
     let weatherSeries2 = chart.series.push(new am4charts.LineSeries());
 
-
-
     consumptionSeries.zIndex = 10;
     consumptionSeries2.zIndex = 10;
     demandSeries.zIndex = 20;
@@ -100,19 +98,19 @@ export class AppComponent implements OnInit {
       // );
       chart.scrollbarX.series.push(consumptionAxis);
 
-      dateAxis.renderer.grid.template.location = 0;
       dateAxis.id = "dateAxis";
+      dateAxis.renderer.grid.template.location = 0;
       // dateAxis.renderer.grid.template.location = 0.5;
       dateAxis.renderer.labels.template.location = 0;
-      dateAxis.renderer.minGridDistance = 50;
-      dateAxis.renderer.cellStartLocation = 0.1;
-      dateAxis.renderer.cellEndLocation = 0.9;
-      // dateAxis.min = (addYears(startOfYear(new Date()), -1)).getTime();
-      // dateAxis.max = (endOfYear(new Date())).getTime();
+      dateAxis.renderer.minGridDistance = 100;
+      dateAxis.renderer.cellStartLocation = 0.2;
+      dateAxis.renderer.cellEndLocation = 0.8;
+
       dateAxis.tooltipDateFormat = "hh:mm a, d MMMM yyyy";
       dateAxis.tooltipText = "{HH:mm:ss}";
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
+
       dateAxis.baseInterval = { timeUnit: "day", count: 1 };
 
       consumptionAxis.title.text = "consumption";
@@ -209,6 +207,8 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')} " + +"";
       consumptionSeries2.columns.template.width = am4core.percent(100);
       consumptionState.properties.fillOpacity = 0.9;
+      consumptionSeries2.hiddenInLegend = true;
+      consumptionSeries2.hide();
 
       demandSeries.sequencedInterpolation = true;
       demandSeries.dataFields.valueY = "demand";
@@ -252,6 +252,8 @@ export class AppComponent implements OnInit {
       demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " + +"";
       demandSeries2.tensionX = 0.77;
       demandSeries2.strokeDasharray = "8,4";
+      demandSeries2.hiddenInLegend = true;
+      demandSeries2.hide();
       // demandSeries2.hiddenInLegend = true;
 
       //////////////////////////////////////////////
@@ -359,9 +361,9 @@ export class AppComponent implements OnInit {
         0,
         true
       );
-      chart.map.getKey("demand1").data = data[0];
-      chart.map.getKey("consumption1").data = data[0];
-      chart.map.getKey("weather1").data = data[0];
+      chart.map.getKey("demand1").data = data;
+      chart.map.getKey("consumption1").data = data;
+      // chart.map.getKey("weather1").data = data[0];
 
       // this.chart.data = this.generateChartData(0);
       // setTimeout(() => {
@@ -410,6 +412,15 @@ export class AppComponent implements OnInit {
       //       }, 50);
 
       //     });
+      chart.events.on("ready", () => {
+        (chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+          new Date("2020-10-01"),
+          new Date("2020-12-01"),
+          true,
+          true,
+          true
+        );
+      });
       this.chart = chart;
     });
   }
@@ -459,59 +470,57 @@ export class AppComponent implements OnInit {
     return data;
   }
 
-  zoomChange(start, end) {
-    (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-      start,
-      end,
-      true,
-      true
-    );
-  }
+  // zoomChange(start, end) {
+  //   (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+  //     start,
+  //     end,
+  //     true,
+  //     true
+  //   );
+  // }
 
   recentRange(value: number) {
-    let data: any;
-    if (value === 7) {
-      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
-        timeUnit: "hour",
-        count: 1
-      };
-
-      data = this.generateChartData(
-        addDays(new Date(), -7),
-        new Date(),
-        3600,
-        true
-      );
-      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
-        addDays(new Date(), -7),
-        new Date(),
-        true,
-        true,
-        true
-      );
-    } else if (value === 365) {
-      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
-        timeUnit: "month",
-        count: 1
-      };
-      data = this.generateChartData(
-        addYears(new Date(), -3),
-        new Date(),
-        0,
-        true
-      );
-      (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
-        addYears(new Date(), -3),
-        new Date(),
-        true,
-        true,
-        true
-      );
-    }
-
-    this.chart.map.getKey("demand1").data = data[0];
-    this.chart.map.getKey("consumption1").data = data[0];
-    this.chart.map.getKey("weather1").data = data[0];
+    // let data: any;
+    // if (value === 7) {
+    //   (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
+    //     timeUnit: "hour",
+    //     count: 1
+    //   };
+    //   data = this.generateChartData(
+    //     addDays(new Date(), -7),
+    //     new Date(),
+    //     3600,
+    //     true
+    //   );
+    //   (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
+    //     addDays(new Date(), -7),
+    //     new Date(),
+    //     true,
+    //     true,
+    //     true
+    //   );
+    // } else if (value === 365) {
+    //   (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
+    //     timeUnit: "month",
+    //     count: 1
+    //   };
+    //   data = this.generateChartData(
+    //     addYears(new Date(), -3),
+    //     new Date(),
+    //     0,
+    //     true
+    //   );
+    //   (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
+    //     addYears(new Date(), -3),
+    //     new Date(),
+    //     true,
+    //     true,
+    //     true
+    //   );
+    // }
+    // this.chart.map.getKey("demand1").data = data[0];
+    // this.chart.map.getKey("consumption1").data = data[0];
+    // this.chart.map.getKey("weather1").data = data[0];
   }
 
   ngOnDestroy() {
