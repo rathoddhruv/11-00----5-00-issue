@@ -182,6 +182,7 @@ export class AppComponent implements OnInit {
       consumptionSeries.columns.template.tooltipText =
         "{valueY.formatNumber('#,###.')} " + +"";
       consumptionSeries.columns.template.width = am4core.percent(100);
+      consumptionSeries.clustered = false;
 
       consumptionSeries2.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
@@ -208,6 +209,7 @@ export class AppComponent implements OnInit {
       consumptionSeries2.columns.template.width = am4core.percent(100);
       consumptionState.properties.fillOpacity = 0.9;
       consumptionSeries2.hiddenInLegend = true;
+      consumptionSeries2.clustered = false;
       consumptionSeries2.hide();
 
       demandSeries.sequencedInterpolation = true;
