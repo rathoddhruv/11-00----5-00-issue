@@ -88,7 +88,9 @@ export class AppComponent implements OnInit {
       chart.scrollbarX.parent = chart.bottomAxesContainer;
 
       // chart.dateFormatter.utc = true;
+      chart.maskBullets = false;
       chart.dateFormatter.inputDateFormat = "i";
+      chart.dateFormatter.timezone = "America/Chicago";
       chart.cursor = new XYCursor();
       chart.cursor.behavior = "panX";
 
