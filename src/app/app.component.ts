@@ -56,7 +56,8 @@ export class AppComponent implements OnInit {
     var series = this.chart.series.push(new am4charts.LineSeries());
     series.dataFields.valueY = field;
     series.dataFields.dateX = 'date';
-   series.yAxis = yAxis;
+    series.yAxis = yAxis;
+    series.id = name;
     series.name = name;
     series.tooltipText = '{dateX}: [b]{valueY}[/]';
     series.strokeWidth = 2;
@@ -89,17 +90,18 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.grid.template.location = 0;
       dateAxis.renderer.minGridDistance = 30;
 
-      var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-      var valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
-      var valueAxis4 = chart.yAxes.push(new am4charts.ValueAxis());
-      var valueAxis5 = chart.yAxes.push(new am4charts.ValueAxis());
+      var valueAxis = this.createAxis(chart, 'valueAxis');
+      var valueAxis2 = this.createAxis(chart, 'valueAxis2');
+      var valueAxis3 = this.createAxis(chart, 'valueAxis3');
+      var valueAxis4 = this.createAxis(chart, 'valueAxis4');
+      var valueAxis5 = this.createAxis(chart, 'valueAxis5');
+    
 
-      this.createSeries('data', 'Series #1', valueAxis);
-      this.createSeries('data2', 'Series #2', valueAxis2);
-      this.createSeries('data3', 'Series #3', valueAxis3);
-      this.createSeries('data4', 'Series #4', valueAxis4);
-      this.createSeries('data5', 'Series #5', valueAxis5);
+      this.createSeries('data', 'Series1', valueAxis);
+      this.createSeries('data2', 'Series2', valueAxis2);
+      this.createSeries('data3', 'Series3', valueAxis3);
+      this.createSeries('data4', 'Series4', valueAxis4);
+      this.createSeries('data5', 'Series5', valueAxis5);
 
       chart.legend = new am4charts.Legend();
       // chart.legend.position = 'right';
@@ -108,6 +110,11 @@ export class AppComponent implements OnInit {
 
       chart.cursor = new am4charts.XYCursor();
     });
+  }
+  createAxis(chart: any, id: string) {
+    let axis = new am4charts.ValueAxis();
+    axis.id = id;
+    return chart.yAxes.push(axis);
   }
 
   generateChartData(start: Date, end: Date, interval) {
@@ -181,34 +188,43 @@ export class AppComponent implements OnInit {
     });
   }
 
-    preferenceGraphAxesIndex(chart) {
+  preferenceGraphAxesIndex(chart) {
     setTimeout(() => {
       let graphAxesIndex = 0;
       let axisDefinedArray: string[] = [];
 
-      chart.series.values.map(element => {
+      chart.series.values.map((element) => {
         if (!axisDefinedArray.includes(element.yAxis.id)) {
           // console.log(element.yAxis.id);
           if (!element.isHiding && !element.isHidden) {
             if (graphAxesIndex < 4) {
               if (graphAxesIndex === 0 || graphAxesIndex === 3) {
-                (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).renderer.opposite = false;
-                (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = false;
+                (
+                  chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+                ).renderer.opposite = false;
+                (
+                  chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+                ).disabled = false;
                 axisDefinedArray.push(element.yAxis.id);
               }
               if (graphAxesIndex === 1 || graphAxesIndex === 2) {
-                (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).renderer.opposite = true;
-                (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = false;
+                (
+                  chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+                ).renderer.opposite = true;
+                (
+                  chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+                ).disabled = false;
                 axisDefinedArray.push(element.yAxis.id);
               }
             } else {
-              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = true;
+              (
+                chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+              ).disabled = true;
             }
             graphAxesIndex++;
           }
         }
       });
     }, 5000);
-
   }
 }
