@@ -2,10 +2,12 @@ p {
   font-family: Lato;
 }
 
-::ng-deep #chartdiv_1 {
-  height:500px !important;
+ #chartdiv_1 {
+  margin: 100px;
+  height: 500px !important;
 }
 
-::ng-deep .last-style{
+::ng-deep .last-style {
+  margin-top: 100;
   margin: 100px;
 }
