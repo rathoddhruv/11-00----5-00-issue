@@ -59,9 +59,6 @@ export class AppComponent implements OnInit {
     series.name = name;
     series.tooltipText = '{dateX}: [b]{valueY}[/]';
     series.strokeWidth = 2;
-    series.dummyData = {
-      position: legendposition,
-    };
 
     var bullet = series.bullets.push(new am4charts.CircleBullet());
     bullet.circle.stroke = am4core.color('#fff');
@@ -73,6 +70,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     let chart = am4core.create('chartdiv_1', am4charts.XYChart);
     let data = this.generateChartData(new Date(), addDays(new Date(), 2), 3600);
+    chart.data = this.generateChartData(
+      new Date(),
+      addDays(new Date(), 2),
+      3600
+    );
 
     // dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
     // dateAxis.max = endOfYear(new Date()).getTime();
@@ -95,21 +97,11 @@ export class AppComponent implements OnInit {
       this.createSeries('data5', 'Series #5', 3);
 
       chart.legend = new am4charts.Legend();
-      chart.legend.position = 'right';
-      chart.legend.valign = 'top';
+      // chart.legend.position = 'right';
+      // chart.legend.valign = 'top';
       chart.legend.width = 200;
 
       chart.cursor = new am4charts.XYCursor();
-
-      debugger;
-      // this.chart.map.getKey('series1').data = data[0];
-      // this.chart.map.getKey('series0').data = data[0];
-
-      // this.chart.data = this.generateChartData(0);
-      // setTimeout(() => {
-      //   this.chart.map.getKey('series0Past').data = data[1];
-      //   this.chart.map.getKey('series1Past').data = data[1];
-      // }, 2000);
     });
   }
 
@@ -143,7 +135,7 @@ export class AppComponent implements OnInit {
       data5 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
 
       chartData[0].push({
-        time: newDate.toUTCString(),
+        date: newDate.toUTCString(),
         data: data,
         data2: data2,
         data3: data3,
@@ -152,7 +144,7 @@ export class AppComponent implements OnInit {
       });
     }
     debugger;
-    return chartData;
+    return chartData[0];
   }
 
   recentRange(value: number) {
