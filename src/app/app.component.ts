@@ -180,4 +180,35 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+    preferenceGraphAxesIndex(chart) {
+    setTimeout(() => {
+      let graphAxesIndex = 0;
+      let axisDefinedArray: string[] = [];
+
+      chart.series.values.map(element => {
+        if (!axisDefinedArray.includes(element.yAxis.id)) {
+          // console.log(element.yAxis.id);
+          if (!element.isHiding && !element.isHidden) {
+            if (graphAxesIndex < 4) {
+              if (graphAxesIndex === 0 || graphAxesIndex === 3) {
+                (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).renderer.opposite = false;
+                (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = false;
+                axisDefinedArray.push(element.yAxis.id);
+              }
+              if (graphAxesIndex === 1 || graphAxesIndex === 2) {
+                (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).renderer.opposite = true;
+                (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = false;
+                axisDefinedArray.push(element.yAxis.id);
+              }
+            } else {
+              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = true;
+            }
+            graphAxesIndex++;
+          }
+        }
+      });
+    }, 5000);
+
+  }
 }
