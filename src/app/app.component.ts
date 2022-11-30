@@ -52,10 +52,11 @@ export class AppComponent implements OnInit {
   start = new Date();
   end = new Date();
 
-  createSeries(field, name, legendposition) {
+  createSeries(field, name, yAxis) {
     var series = this.chart.series.push(new am4charts.LineSeries());
     series.dataFields.valueY = field;
     series.dataFields.dateX = 'date';
+   series.yAxis = yAxis;
     series.name = name;
     series.tooltipText = '{dateX}: [b]{valueY}[/]';
     series.strokeWidth = 2;
@@ -89,12 +90,16 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.minGridDistance = 30;
 
       var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+      var valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
+      var valueAxis4 = chart.yAxes.push(new am4charts.ValueAxis());
+      var valueAxis5 = chart.yAxes.push(new am4charts.ValueAxis());
 
-      this.createSeries('data', 'Series #1', 2);
-      this.createSeries('data2', 'Series #2', 1);
-      this.createSeries('data3', 'Series #3', 4);
-      this.createSeries('data4', 'Series #4', 0);
-      this.createSeries('data5', 'Series #5', 3);
+      this.createSeries('data', 'Series #1', valueAxis);
+      this.createSeries('data2', 'Series #2', valueAxis2);
+      this.createSeries('data3', 'Series #3', valueAxis3);
+      this.createSeries('data4', 'Series #4', valueAxis4);
+      this.createSeries('data5', 'Series #5', valueAxis5);
 
       chart.legend = new am4charts.Legend();
       // chart.legend.position = 'right';
