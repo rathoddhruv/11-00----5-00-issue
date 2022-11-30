@@ -90,12 +90,11 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.grid.template.location = 0;
       dateAxis.renderer.minGridDistance = 30;
 
-      var valueAxis = this.createAxis(chart, 'valueAxis');
-      var valueAxis2 = this.createAxis(chart, 'valueAxis2');
-      var valueAxis3 = this.createAxis(chart, 'valueAxis3');
-      var valueAxis4 = this.createAxis(chart, 'valueAxis4');
-      var valueAxis5 = this.createAxis(chart, 'valueAxis5');
-    
+      var valueAxis = this.createAxis(chart, 'valueAxis', 1);
+      var valueAxis2 = this.createAxis(chart, 'valueAxis2', 2);
+      var valueAxis3 = this.createAxis(chart, 'valueAxis3', 3);
+      var valueAxis4 = this.createAxis(chart, 'valueAxis4', 4);
+      var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
 
       this.createSeries('data', 'Series1', valueAxis);
       this.createSeries('data2', 'Series2', valueAxis2);
@@ -104,17 +103,18 @@ export class AppComponent implements OnInit {
       this.createSeries('data5', 'Series5', valueAxis5);
 
       chart.legend = new am4charts.Legend();
-      // chart.legend.position = 'right';
-      // chart.legend.valign = 'top';
+
       chart.legend.width = 200;
 
       chart.cursor = new am4charts.XYCursor();
     });
+    this.preferenceGraphAxesIndex(chart);
   }
-  createAxis(chart: any, id: string) {
-    let axis = new am4charts.ValueAxis();
-    axis.id = id;
-    return chart.yAxes.push(axis);
+  createAxis(chart: any, id: string, number) {
+    let tempAxis = new am4charts.ValueAxis();
+    tempAxis.id = id;
+
+    return chart.yAxes.push(tempAxis);
   }
 
   generateChartData(start: Date, end: Date, interval) {
@@ -155,7 +155,6 @@ export class AppComponent implements OnInit {
         data5: data5,
       });
     }
-    debugger;
     return chartData[0];
   }
 
@@ -194,6 +193,7 @@ export class AppComponent implements OnInit {
       let axisDefinedArray: string[] = [];
 
       chart.series.values.map((element) => {
+        debugger;
         if (!axisDefinedArray.includes(element.yAxis.id)) {
           // console.log(element.yAxis.id);
           if (!element.isHiding && !element.isHidden) {
@@ -225,6 +225,6 @@ export class AppComponent implements OnInit {
           }
         }
       });
-    }, 5000);
+    }, 1000);
   }
 }
