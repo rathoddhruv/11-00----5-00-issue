@@ -91,10 +91,15 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.minGridDistance = 30;
 
       var valueAxis = this.createAxis(chart, 'valueAxis', 1);
+      valueAxis.id = 'valueAxis';
       var valueAxis2 = this.createAxis(chart, 'valueAxis2', 2);
+      valueAxis2.id = 'valueAxis2';
       var valueAxis3 = this.createAxis(chart, 'valueAxis3', 3);
+      valueAxis3.id = 'valueAxis3';
       var valueAxis4 = this.createAxis(chart, 'valueAxis4', 4);
+      valueAxis4.id = 'valueAxis4';
       var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
+      valueAxis5.id = 'valueAxis5';
 
       this.createSeries(chart, 'data', 'Series1', valueAxis);
       this.createSeries(chart, 'data2', 'Series2', valueAxis2);
@@ -114,50 +119,8 @@ export class AppComponent implements OnInit {
   }
   createAxis(chart: any, id: string, number) {
     let tempAxis = new am4charts.ValueAxis();
-    tempAxis.id = id;
 
     return chart.yAxes.push(tempAxis);
-  }
-
-  generateChartData(start: Date, end: Date, interval) {
-    var chartData = [[], []];
-    var data = 1600;
-    var data2 = 1600;
-    var data3 = 1600;
-    var data4 = 1600;
-    var data5 = 1600;
-
-    let step = 0;
-    var newDate = start;
-    while (isBefore(newDate, end)) {
-      if (interval == 3600) {
-        newDate = addHours(newDate, 1);
-      } else {
-        newDate = addMonths(newDate, 1);
-      }
-
-      if (step >= 60) {
-        step = 0;
-      } else {
-        step = step + 5;
-      }
-
-      data += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-      data2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-      data3 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-      data4 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-      data5 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-
-      chartData[0].push({
-        date: newDate.toUTCString(),
-        data: data,
-        data2: data2,
-        data3: data3,
-        data4: data4,
-        data5: data5,
-      });
-    }
-    return chartData[0];
   }
 
   recentRange(value: number) {
@@ -226,5 +189,46 @@ export class AppComponent implements OnInit {
         }
       }
     });
+  }
+
+  generateChartData(start: Date, end: Date, interval) {
+    var chartData = [[], []];
+    var data = 1600;
+    var data2 = 1600;
+    var data3 = 1600;
+    var data4 = 1600;
+    var data5 = 1600;
+
+    let step = 0;
+    var newDate = start;
+    while (isBefore(newDate, end)) {
+      if (interval == 3600) {
+        newDate = addHours(newDate, 1);
+      } else {
+        newDate = addMonths(newDate, 1);
+      }
+
+      if (step >= 60) {
+        step = 0;
+      } else {
+        step = step + 5;
+      }
+
+      data += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      data2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      data3 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      data4 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      data5 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+
+      chartData[0].push({
+        date: newDate.toUTCString(),
+        data: data,
+        data2: data2,
+        data3: data3,
+        data4: data4,
+        data5: data5,
+      });
+    }
+    return chartData[0];
   }
 }
