@@ -52,6 +52,24 @@ export class AppComponent implements OnInit {
   start = new Date();
   end = new Date();
 
+  createSeries(field, name, legendposition) {
+  var series = this.chart.series.push(new am4charts.LineSeries());
+  series.dataFields.valueY = field;
+  series.dataFields.dateX = "date";
+  series.name = name;
+  series.tooltipText = "{dateX}: [b]{valueY}[/]";
+  series.strokeWidth = 2;
+  series.dummyData = {
+    position: legendposition
+  };
+  
+  var bullet = series.bullets.push(new am4charts.CircleBullet());
+  bullet.circle.stroke = am4core.color("#fff");
+  bullet.circle.strokeWidth = 2;
+  
+  return series;
+}
+
   ngOnInit() {
     let chart = am4core.create('chartdiv_1', am4charts.XYChart);
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
