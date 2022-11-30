@@ -5,3 +5,7 @@ p {
 ::ng-deep #chartdiv_1 {
   height:500px !important;
 }
+
+::ng-deep .last-style{
+  margin: 100px;
+}
