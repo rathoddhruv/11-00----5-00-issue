@@ -107,8 +107,8 @@ export class AppComponent implements OnInit {
       chart.legend.width = 200;
 
       chart.cursor = new am4charts.XYCursor();
+      this.preferenceGraphAxesIndex(chart);
     });
-    this.preferenceGraphAxesIndex(chart);
   }
   createAxis(chart: any, id: string, number) {
     let tempAxis = new am4charts.ValueAxis();
@@ -188,7 +188,6 @@ export class AppComponent implements OnInit {
   }
 
   preferenceGraphAxesIndex(chart) {
-    setTimeout(() => {
       let graphAxesIndex = 0;
       let axisDefinedArray: string[] = [];
 
@@ -225,6 +224,5 @@ export class AppComponent implements OnInit {
           }
         }
       });
-    }, 1000);
   }
 }
