@@ -47,13 +47,13 @@ export class AppComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
-  chart: am4charts.XYChart = new am4charts.XYChart();
+  chart: am4charts.XYChart;
   @ViewChild('chartDiv1', { static: false }) chartDiv1: ElementRef;
   start = new Date();
   end = new Date();
 
-  createSeries(field, name, yAxis) {
-    var series = this.chart.series.push(new am4charts.LineSeries());
+  createSeries(chart, field, name, yAxis) {
+    var series = chart.series.push(new am4charts.LineSeries());
     series.dataFields.valueY = field;
     series.dataFields.dateX = 'date';
     series.yAxis = yAxis;
@@ -96,18 +96,20 @@ export class AppComponent implements OnInit {
       var valueAxis4 = this.createAxis(chart, 'valueAxis4', 4);
       var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
 
-      this.createSeries('data', 'Series1', valueAxis);
-      this.createSeries('data2', 'Series2', valueAxis2);
-      this.createSeries('data3', 'Series3', valueAxis3);
-      this.createSeries('data4', 'Series4', valueAxis4);
-      this.createSeries('data5', 'Series5', valueAxis5);
+      this.createSeries(chart, 'data', 'Series1', valueAxis);
+      this.createSeries(chart, 'data2', 'Series2', valueAxis2);
+      this.createSeries(chart, 'data3', 'Series3', valueAxis3);
+      this.createSeries(chart, 'data4', 'Series4', valueAxis4);
+      this.createSeries(chart, 'data5', 'Series5', valueAxis5);
 
       chart.legend = new am4charts.Legend();
 
       chart.legend.width = 200;
 
       chart.cursor = new am4charts.XYCursor();
-      this.preferenceGraphAxesIndex(chart);
+      setTimeout(() => {
+        this.preferenceGraphAxesIndex(chart);
+      }, 2000);
     });
   }
   createAxis(chart: any, id: string, number) {
