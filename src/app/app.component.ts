@@ -221,7 +221,7 @@ export class AppComponent implements OnInit {
       data5 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
 
       chartData[0].push({
-        date: newDate.toUTCString(),
+        date: newDate,
         data: data,
         data2: data2,
         data3: data3,
