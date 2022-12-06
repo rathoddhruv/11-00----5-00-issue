@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
 
       chart.legend = new am4charts.Legend();
 
-      chart.legend.width = 200;
+      // chart.legend.width = 200;
 
       chart.cursor = new am4charts.XYCursor();
       setTimeout(() => {
@@ -163,21 +163,13 @@ export class AppComponent implements OnInit {
         if (!element.isHiding && !element.isHidden) {
           if (graphAxesIndex < 4) {
             if (graphAxesIndex === 0 || graphAxesIndex === 3) {
-              (
-                chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-              ).renderer.opposite = false;
-              (
-                chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-              ).disabled = false;
+              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).renderer.opposite = false;
+              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = false;
               axisDefinedArray.push(element.yAxis.id);
             }
             if (graphAxesIndex === 1 || graphAxesIndex === 2) {
-              (
-                chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-              ).renderer.opposite = true;
-              (
-                chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-              ).disabled = false;
+              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).renderer.opposite = true;
+              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = false;
               axisDefinedArray.push(element.yAxis.id);
             }
           } else {
