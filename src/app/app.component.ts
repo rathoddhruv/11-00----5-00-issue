@@ -100,6 +100,14 @@ export class AppComponent implements OnInit {
       valueAxis4.id = 'valueAxis4';
       var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
       valueAxis5.id = 'valueAxis5';
+      var valueAxis5 = this.createAxis(chart, 'valueAxis6', 6);
+      valueAxis6.id = 'valueAxis6';
+      var valueAxis6 = this.createAxis(chart, 'valueAxis7', 7);
+      valueAxis5.id = 'valueAxis5';
+      var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
+      valueAxis5.id = 'valueAxis5';
+      var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
+      valueAxis5.id = 'valueAxis5';
 
       this.createSeries(chart, 'data', 'Series1', valueAxis);
       this.createSeries(chart, 'data2', 'Series2', valueAxis2);
