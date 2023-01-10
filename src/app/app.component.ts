@@ -100,20 +100,24 @@ export class AppComponent implements OnInit {
       valueAxis4.id = 'valueAxis4';
       var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
       valueAxis5.id = 'valueAxis5';
-      var valueAxis5 = this.createAxis(chart, 'valueAxis6', 6);
+      var valueAxis6 = this.createAxis(chart, 'valueAxis6', 6);
       valueAxis6.id = 'valueAxis6';
-      var valueAxis6 = this.createAxis(chart, 'valueAxis7', 7);
-      valueAxis5.id = 'valueAxis5';
-      var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
-      valueAxis5.id = 'valueAxis5';
-      var valueAxis5 = this.createAxis(chart, 'valueAxis5', 5);
-      valueAxis5.id = 'valueAxis5';
+      var valueAxis7 = this.createAxis(chart, 'valueAxis7', 7);
+      valueAxis7.id = 'valueAxis7';
+      var valueAxis8 = this.createAxis(chart, 'valueAxis8', 8);
+      valueAxis8.id = 'valueAxis8';
+      var valueAxis9 = this.createAxis(chart, 'valueAxis9', 9);
+      valueAxis9.id = 'valueAxis9';
 
       this.createSeries(chart, 'data', 'Series1', valueAxis);
       this.createSeries(chart, 'data2', 'Series2', valueAxis2);
       this.createSeries(chart, 'data3', 'Series3', valueAxis3);
       this.createSeries(chart, 'data4', 'Series4', valueAxis4);
       this.createSeries(chart, 'data5', 'Series5', valueAxis5);
+      this.createSeries(chart, 'data6', 'Series6', valueAxis6);
+      this.createSeries(chart, 'data7', 'Series7', valueAxis7);
+      this.createSeries(chart, 'data8', 'Series8', valueAxis8);
+      this.createSeries(chart, 'data9', 'Series9', valueAxis9);
 
       chart.legend = new am4charts.Legend();
 
@@ -160,34 +164,57 @@ export class AppComponent implements OnInit {
     });
   }
 
-  preferenceGraphAxesIndex(chart) {
-    let graphAxesIndex = 0;
-    let axisDefinedArray: any = [];
+  hideAxis(tAxis: am4charts.ValueAxis) {
+    tAxis.hide();
+    tAxis.width = 0;
+  }
 
-    chart.series.values.map((element) => {
-      debugger;
-      if (!axisDefinedArray.includes(element.yAxis.id)) {
-        // console.log(element.yAxis.id);
-        if (!element.isHiding && !element.isHidden) {
-          if (graphAxesIndex < 4) {
-            if (graphAxesIndex === 0 || graphAxesIndex === 3) {
-              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).renderer.opposite = false;
-              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = false;
-              axisDefinedArray.push(element.yAxis.id);
-            }
-            if (graphAxesIndex === 1 || graphAxesIndex === 2) {
-              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).renderer.opposite = true;
-              (chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis).disabled = false;
-              axisDefinedArray.push(element.yAxis.id);
-            }
-          } else {
-            (
-              chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-            ).disabled = true;
+  showAxis(tAxis: am4charts.ValueAxis) {
+    tAxis.width = undefined;
+    tAxis.show();
+  }
+  preferenceGraphAxesIndex(chart: am4charts.XYChart, response) {
+    let graphAxesIndex = 0;
+    let axisDefinedArray = [];
+
+    let sortedVisibleAxis = response.intervalData.axisSet
+      .map((x) => axisDefinedArray.find((y) => y === x.axisId))
+      .filter((item) => item);
+    let axisListState = [];
+    axisDefinedArray = [];
+    for (let index = sortedVisibleAxis.length - 1; index >= 0; index--) {
+      let tAxis = chart.map.getKey(
+        sortedVisibleAxis[index]
+      ) as am4charts.ValueAxis;
+      if (tAxis) {
+        if (index < 4) {
+          if (index === 1 || index === 2) {
+            tAxis.renderer.opposite = true;
+            chart.rightAxesContainer.children.moveValue(
+              chart.rightAxesContainer.children.values.find(
+                (obj: any) => obj.id === tAxis.id
+              ),
+              index === 1 ? 1 : 0
+            ); // to swap high priority axis to innerRight
           }
-          graphAxesIndex++;
+          if (index === 0 || index === 3) {
+            tAxis.renderer.opposite = false;
+            chart.leftAxesContainer.children.moveValue(
+              chart.leftAxesContainer.children.values.find(
+                (obj: any) => obj.id === tAxis.id
+              ),
+              index === 0 ? 1 : 0
+            ); // to swap high priority axis to innerLeft
+          }
+          axisListState.push({ axis: tAxis, isShow: true });
+        } else {
+          axisListState.push({ axis: tAxis, isShow: false });
         }
       }
+    }
+    axisListState.forEach((obj) => {
+      // this for loop will try to bulk change hide/show status at same time
+      obj.isShow ? this.showAxis(obj.axis) : this.hideAxis(obj.axis);
     });
   }
 
