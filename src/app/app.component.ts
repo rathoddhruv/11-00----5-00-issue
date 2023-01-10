@@ -21,6 +21,7 @@ import {
   ViewEncapsulation,
   ElementRef,
 } from '@angular/core';
+import * as _ from "lodash";
 import { MouseCursorStyle } from '@amcharts/amcharts4/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {
@@ -164,6 +165,45 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // preferenceGraphAxesIndex(chart) {
+  //   let graphAxesIndex = 0;
+  //   let axisDefinedArray: any = [];
+
+  //   chart.series.values.map((element) => {
+  //     debugger;
+  //     if (!axisDefinedArray.includes(element.yAxis.id)) {
+  //       // console.log(element.yAxis.id);
+  //       if (!element.isHiding && !element.isHidden) {
+  //         if (graphAxesIndex < 4) {
+  //           if (graphAxesIndex === 0 || graphAxesIndex === 3) {
+  //             (
+  //               chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+  //             ).renderer.opposite = false;
+  //             (
+  //               chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+  //             ).disabled = false;
+  //             axisDefinedArray.push(element.yAxis.id);
+  //           }
+  //           if (graphAxesIndex === 1 || graphAxesIndex === 2) {
+  //             (
+  //               chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+  //             ).renderer.opposite = true;
+  //             (
+  //               chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+  //             ).disabled = false;
+  //             axisDefinedArray.push(element.yAxis.id);
+  //           }
+  //         } else {
+  //           (
+  //             chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
+  //           ).disabled = true;
+  //         }
+  //         graphAxesIndex++;
+  //       }
+  //     }
+  //   });
+  // }
+
   hideAxis(tAxis: am4charts.ValueAxis) {
     tAxis.hide();
     tAxis.width = 0;
@@ -173,13 +213,12 @@ export class AppComponent implements OnInit {
     tAxis.width = undefined;
     tAxis.show();
   }
-  preferenceGraphAxesIndex(chart: am4charts.XYChart, response) {
+  preferenceGraphAxesIndex(chart: am4charts.XYChart) {
     let graphAxesIndex = 0;
     let axisDefinedArray = [];
 
-    let sortedVisibleAxis = response.intervalData.axisSet
-      .map((x) => axisDefinedArray.find((y) => y === x.axisId))
-      .filter((item) => item);
+    // let sortedVisibleAxis = response.intervalData.axisSet.map(x => axisDefinedArray.find(y => y === x.axisId)).filter(item => item);
+    let sortedVisibleAxis = _.sample(chart.yAxes.value, 4);
     let axisListState = [];
     axisDefinedArray = [];
     for (let index = sortedVisibleAxis.length - 1; index >= 0; index--) {
