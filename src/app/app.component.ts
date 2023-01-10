@@ -21,7 +21,6 @@ import {
   ViewEncapsulation,
   ElementRef,
 } from '@angular/core';
-import * as _ from "lodash";
 import { MouseCursorStyle } from '@amcharts/amcharts4/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {
@@ -35,7 +34,7 @@ import {
   isBefore,
   addMonths,
 } from 'date-fns';
-useTheme(am4themes_animated);
+// useTheme(am4themes_animated);
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -165,45 +164,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // preferenceGraphAxesIndex(chart) {
-  //   let graphAxesIndex = 0;
-  //   let axisDefinedArray: any = [];
-
-  //   chart.series.values.map((element) => {
-  //     debugger;
-  //     if (!axisDefinedArray.includes(element.yAxis.id)) {
-  //       // console.log(element.yAxis.id);
-  //       if (!element.isHiding && !element.isHidden) {
-  //         if (graphAxesIndex < 4) {
-  //           if (graphAxesIndex === 0 || graphAxesIndex === 3) {
-  //             (
-  //               chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-  //             ).renderer.opposite = false;
-  //             (
-  //               chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-  //             ).disabled = false;
-  //             axisDefinedArray.push(element.yAxis.id);
-  //           }
-  //           if (graphAxesIndex === 1 || graphAxesIndex === 2) {
-  //             (
-  //               chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-  //             ).renderer.opposite = true;
-  //             (
-  //               chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-  //             ).disabled = false;
-  //             axisDefinedArray.push(element.yAxis.id);
-  //           }
-  //         } else {
-  //           (
-  //             chart.map.getKey(element.yAxis.id) as am4charts.ValueAxis
-  //           ).disabled = true;
-  //         }
-  //         graphAxesIndex++;
-  //       }
-  //     }
-  //   });
-  // }
-
   hideAxis(tAxis: am4charts.ValueAxis) {
     tAxis.hide();
     tAxis.width = 0;
@@ -213,18 +173,52 @@ export class AppComponent implements OnInit {
     tAxis.width = undefined;
     tAxis.show();
   }
+  getRandom(length) {
+    return Math.floor(Math.random() * length);
+  }
+  getRandomSample(array, size) {
+    var length = array.length,
+      swaps = [],
+      i = size,
+      temp;
+
+    while (i--) {
+      var rindex = this.getRandom(length);
+      temp = array[rindex];
+      array[rindex] = array[i];
+      array[i] = temp;
+      swaps.push({ from: i, to: rindex });
+    }
+
+    var sample = array.slice(0, size);
+
+    // Put everything back.
+    i = size;
+    while (i--) {
+      var pop = swaps.pop();
+      temp = array[pop.from];
+      array[pop.from] = array[pop.to];
+      array[pop.to] = temp;
+    }
+
+    return sample;
+  }
   preferenceGraphAxesIndex(chart: am4charts.XYChart) {
     let graphAxesIndex = 0;
     let axisDefinedArray = [];
 
     // let sortedVisibleAxis = response.intervalData.axisSet.map(x => axisDefinedArray.find(y => y === x.axisId)).filter(item => item);
-    let sortedVisibleAxis = _.sample(chart.yAxes.value, 4);
+    debugger;
+    // let sortedVisibleAxis = _.sampleSize(chart.yAxes.values, _.random(chart.yAxes.values.length));
+    let sortedVisibleAxis = this.getRandomSample(chart.yAxes.values, 4);
+    // let sortedVisibleAxis = _.sample(chart.yAxes.value, 4);
     let axisListState = [];
     axisDefinedArray = [];
     for (let index = sortedVisibleAxis.length - 1; index >= 0; index--) {
-      let tAxis = chart.map.getKey(
-        sortedVisibleAxis[index]
-      ) as am4charts.ValueAxis;
+      // let tAxis = chart.map.getKey(
+      //   sortedVisibleAxis[index]
+      // ) as am4charts.ValueAxis;
+      let tAxis = sortedVisibleAxis[index] as am4charts.ValueAxis;
       if (tAxis) {
         if (index < 4) {
           if (index === 1 || index === 2) {
@@ -260,10 +254,14 @@ export class AppComponent implements OnInit {
   generateChartData(start: Date, end: Date, interval) {
     var chartData = [[], []];
     var data = 1600;
-    var data2 = 1600;
-    var data3 = 1600;
+    var data2 = 500;
+    var data3 = 10000;
     var data4 = 1600;
-    var data5 = 1600;
+    var data5 = 50;
+    var data6 = 1600;
+    var data7 = 2100;
+    var data8 = 125;
+    var data9 = 700;
 
     let step = 0;
     var newDate = start;
@@ -279,12 +277,18 @@ export class AppComponent implements OnInit {
       } else {
         step = step + 5;
       }
+      
 
       data += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       data2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       data3 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       data4 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       data5 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      data6 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      data7 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      data8 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      data9 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      
 
       chartData[0].push({
         date: newDate,
