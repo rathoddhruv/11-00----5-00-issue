@@ -1,10 +1,9 @@
-
-
-
 <div>
-	<span class="last-style">Last:</span>
-	<button class="last-style-values" (click)="recentRange(365)">1Y</button>
-	<button class="last-style-values" (click)="recentRange(7)">7D</button>
+  <span class="last-style">Last:</span>
+  <button class="last-style-values" (click)="recentRange(365)">1Y</button>
+  <button class="last-style-values" (click)="recentRange(7)">7D</button>
 </div>
 
-<div id="chartdiv_1"  #chartDiv1>
+<div id="chartdiv_1" #chartDiv1></div>
+
+<button class="last-style-values" (click)="updateData()">update</button>

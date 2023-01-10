@@ -68,9 +68,36 @@ export class AppComponent implements OnInit {
 
     return series;
   }
+  updateData() {
+    this.chart.data = this.generateChartData(
+      new Date(),
+      addDays(new Date(), 2),
+      3600
+    );
 
+    setTimeout(() => {
+      this.preferenceGraphAxesIndex(this.chart);
+    }, 2000);
+  }
   ngOnInit() {
     let chart = am4core.create('chartdiv_1', am4charts.XYChart);
+    let scrollbarX = new am4charts.XYChartScrollbar(); // Add scrollbar
+    chart.cursor = new am4charts.XYCursor();
+    chart.mouseWheelBehavior = 'none';
+    chart.cursor.behavior = 'panX';
+    chart.zoomOutButton.disabled = true;
+    chart.paddingLeft = 0;
+    chart.maskBullets = false;
+    chart.dateFormatter.inputDateFormat = 'i';
+    chart.dateFormatter.timezone = 'America/Chicago';
+    scrollbarX = new am4charts.XYChartScrollbar();
+    scrollbarX.parent = chart.bottomAxesContainer;
+    // scrollbarX.series.push(this.getPrimarySeries(chart, true, false));
+    scrollbarX.background.fill = am4core.color('#525252');
+    scrollbarX.fontWeight = 'bold';
+    scrollbarX.unselectedOverlay.fillOpacity = 0.6;
+    // scrollbarX.marginTop = 60;
+    scrollbarX.minHeight = 20;
     let data = this.generateChartData(new Date(), addDays(new Date(), 2), 3600);
     chart.data = this.generateChartData(
       new Date(),
@@ -126,7 +153,7 @@ export class AppComponent implements OnInit {
       chart.cursor = new am4charts.XYCursor();
       setTimeout(() => {
         this.preferenceGraphAxesIndex(chart);
-      }, 2000);
+      }, 1000);
     });
   }
   createAxis(chart: any, id: string, number) {
@@ -206,19 +233,12 @@ export class AppComponent implements OnInit {
   preferenceGraphAxesIndex(chart: am4charts.XYChart) {
     let graphAxesIndex = 0;
     let axisDefinedArray = [];
-
-    // let sortedVisibleAxis = response.intervalData.axisSet.map(x => axisDefinedArray.find(y => y === x.axisId)).filter(item => item);
-    debugger;
-    // let sortedVisibleAxis = _.sampleSize(chart.yAxes.values, _.random(chart.yAxes.values.length));
     let sortedVisibleAxis = this.getRandomSample(chart.yAxes.values, 4);
     // let sortedVisibleAxis = _.sample(chart.yAxes.value, 4);
     let axisListState = [];
     axisDefinedArray = [];
-    for (let index = sortedVisibleAxis.length - 1; index >= 0; index--) {
-      // let tAxis = chart.map.getKey(
-      //   sortedVisibleAxis[index]
-      // ) as am4charts.ValueAxis;
-      let tAxis = sortedVisibleAxis[index] as am4charts.ValueAxis;
+    for (let index = chart.yAxes.values.length - 1; index >= 0; index--) {
+      let tAxis = chart.yAxes.values[index] as am4charts.ValueAxis;
       if (tAxis) {
         if (index < 4) {
           if (index === 1 || index === 2) {
@@ -239,16 +259,12 @@ export class AppComponent implements OnInit {
               index === 0 ? 1 : 0
             ); // to swap high priority axis to innerLeft
           }
-          axisListState.push({ axis: tAxis, isShow: true });
+          this.showAxis(tAxis);
         } else {
-          axisListState.push({ axis: tAxis, isShow: false });
+          this.hideAxis(tAxis);
         }
       }
     }
-    axisListState.forEach((obj) => {
-      // this for loop will try to bulk change hide/show status at same time
-      obj.isShow ? this.showAxis(obj.axis) : this.hideAxis(obj.axis);
-    });
   }
 
   generateChartData(start: Date, end: Date, interval) {
@@ -277,7 +293,6 @@ export class AppComponent implements OnInit {
       } else {
         step = step + 5;
       }
-      
 
       data += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       data2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
@@ -288,7 +303,6 @@ export class AppComponent implements OnInit {
       data7 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       data8 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
       data9 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-      
 
       chartData[0].push({
         date: newDate,
@@ -297,6 +311,10 @@ export class AppComponent implements OnInit {
         data3: data3,
         data4: data4,
         data5: data5,
+        data6: data6,
+        data7: data7,
+        data8: data8,
+        data9: data9,
       });
     }
     return chartData[0];
